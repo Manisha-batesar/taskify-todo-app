@@ -405,20 +405,20 @@ export default function TaskifyApp() {
         {/* Sign In Modal */}
         {showSignIn && (
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-            <Card className="w-full max-w-md">
-              <CardHeader className="relative">
+            <Card className="w-full max-w-sm mx-auto">
+              <CardHeader className="relative pb-4 sm:pb-6">
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setShowSignIn(false)}
-                  className="absolute right-2 top-2 h-8 w-8 p-0"
+                  className="absolute right-2 top-2 h-6 w-6 sm:h-8 sm:w-8 p-0"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
-                <CardTitle className="text-center">Sign In to Taskify</CardTitle>
+                <CardTitle className="text-center text-lg sm:text-xl">Sign In to Taskify</CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSignIn} className="space-y-4">
+                <form onSubmit={handleSignIn} className="space-y-3 sm:space-y-4">
                   <div>
                     <Input
                       type="email"
@@ -426,6 +426,7 @@ export default function TaskifyApp() {
                       value={signInEmail}
                       onChange={(e) => setSignInEmail(e.target.value)}
                       required
+                      className="text-sm sm:text-base h-10 sm:h-12"
                     />
                   </div>
                   <div>
@@ -435,12 +436,13 @@ export default function TaskifyApp() {
                       value={signInPassword}
                       onChange={(e) => setSignInPassword(e.target.value)}
                       required
+                      className="text-sm sm:text-base h-10 sm:h-12"
                     />
                   </div>
-                  <Button type="submit" className="w-full bg-[var(--taskify-content)] hover:bg-[var(--taskify-accent)]">
+                  <Button type="submit" className="w-full bg-[var(--taskify-content)] hover:bg-[var(--taskify-accent)] text-sm sm:text-base h-10 sm:h-12">
                     Sign In
                   </Button>
-                  <p className="text-center text-sm text-[var(--taskify-text-secondary)]">
+                  <p className="text-center text-xs sm:text-sm text-[var(--taskify-text-secondary)]">
                     Don't have an account?{" "}
                     <button
                       type="button"
@@ -462,20 +464,20 @@ export default function TaskifyApp() {
         {/* Sign Up Modal */}
         {showSignUp && (
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-            <Card className="w-full max-w-md">
-              <CardHeader className="relative">
+            <Card className="w-full max-w-sm mx-auto">
+              <CardHeader className="relative pb-4 sm:pb-6">
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setShowSignUp(false)}
-                  className="absolute right-2 top-2 h-8 w-8 p-0"
+                  className="absolute right-2 top-2 h-6 w-6 sm:h-8 sm:w-8 p-0"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
-                <CardTitle className="text-center">Sign Up for Taskify</CardTitle>
+                <CardTitle className="text-center text-lg sm:text-xl">Sign Up for Taskify</CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSignUp} className="space-y-4">
+                <form onSubmit={handleSignUp} className="space-y-3 sm:space-y-4">
                   <div>
                     <Input
                       type="text"
@@ -483,6 +485,7 @@ export default function TaskifyApp() {
                       value={signUpName}
                       onChange={(e) => setSignUpName(e.target.value)}
                       required
+                      className="text-sm sm:text-base h-10 sm:h-12"
                     />
                   </div>
                   <div>
@@ -492,6 +495,7 @@ export default function TaskifyApp() {
                       value={signUpEmail}
                       onChange={(e) => setSignUpEmail(e.target.value)}
                       required
+                      className="text-sm sm:text-base h-10 sm:h-12"
                     />
                   </div>
                   <div>
@@ -501,9 +505,10 @@ export default function TaskifyApp() {
                       value={signUpPassword}
                       onChange={(e) => setSignUpPassword(e.target.value)}
                       required
+                      className="text-sm sm:text-base h-10 sm:h-12"
                     />
                   </div>
-                  <Button type="submit" className="w-full bg-[var(--taskify-content)] hover:bg-[var(--taskify-accent)]">
+                  <Button type="submit" className="w-full bg-[var(--taskify-content)] hover:bg-[var(--taskify-accent)] text-sm sm:text-base h-10 sm:h-12">
                     Sign Up
                   </Button>
                   <p className="text-center text-sm text-[var(--taskify-text-secondary)]">
@@ -526,40 +531,40 @@ export default function TaskifyApp() {
         )}
 
         {/* Welcome Screen */}
-        <div className="flex-1 flex items-center justify-center p-6">
-          <div className="max-w-md w-full text-center space-y-8">
+        <div className="flex-1 flex items-center justify-center p-4 sm:p-6">
+          <div className="max-w-sm sm:max-w-md w-full text-center space-y-6 sm:space-y-8">
             {/* Logo */}
-            <div className="flex items-center justify-center gap-3 mb-8">
-              <img src="/taskify-logo.png" alt="Taskify" className="w-16 h-16" />
+            <div className="flex items-center justify-center gap-2 sm:gap-3 mb-6 sm:mb-8">
+              <img src="/taskify-logo.png" alt="Taskify" className="w-12 h-12 sm:w-16 sm:h-16" />
               <div>
-                <h1 className="text-3xl font-bold text-[var(--taskify-text-primary)] font-display">Taskify</h1>
-                <p className="text-[var(--taskify-text-secondary)]">From Plan To Done</p>
+                <h1 className="text-2xl sm:text-3xl font-bold text-[var(--taskify-text-primary)] font-display">Taskify</h1>
+                <p className="text-sm sm:text-base text-[var(--taskify-text-secondary)]">From Plan To Done</p>
               </div>
             </div>
 
             {/* Welcome Message */}
-            <div className="space-y-4">
-              <h2 className="text-2xl font-semibold text-[var(--taskify-text-primary)]">Welcome to Taskify</h2>
-              <p className="text-[var(--taskify-text-secondary)] text-lg">
+            <div className="space-y-3 sm:space-y-4">
+              <h2 className="text-xl sm:text-2xl font-semibold text-[var(--taskify-text-primary)]">Welcome to Taskify</h2>
+              <p className="text-[var(--taskify-text-secondary)] text-sm sm:text-lg">
                 Your personal task management solution. Get organized, stay productive, and achieve your goals.
               </p>
             </div>
 
             {/* Auth Buttons */}
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <Button
                 onClick={() => setShowSignIn(true)}
-                className="w-full bg-[var(--taskify-content)] hover:bg-[var(--taskify-accent)] text-white py-3 text-lg"
+                className="w-full bg-[var(--taskify-content)] hover:bg-[var(--taskify-accent)] text-white h-11 sm:h-12 text-sm sm:text-lg"
               >
-                <LogIn className="w-5 h-5 mr-2" />
+                <LogIn className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 Sign In
               </Button>
               <Button
                 onClick={() => setShowSignUp(true)}
                 variant="outline"
-                className="w-full border-[var(--taskify-content)] text-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white py-3 text-lg"
+                className="w-full border-[var(--taskify-content)] text-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white h-11 sm:h-12 text-sm sm:text-lg"
               >
-                <UserPlus className="w-5 h-5 mr-2" />
+                <UserPlus className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 Create Account
               </Button>
             </div>
@@ -596,7 +601,21 @@ export default function TaskifyApp() {
 
   // Main authenticated UI
   return (
-    <div className="flex h-screen bg-[var(--taskify-background)]">
+    <div className="flex h-screen bg-[var(--taskify-background)]" style={{ 
+      wordBreak: 'break-word',
+      overflowWrap: 'anywhere'
+    }}>
+      <style jsx global>{`
+        .break-words {
+          word-break: break-word;
+          overflow-wrap: anywhere;
+        }
+        .taskify-text-wrap {
+          white-space: pre-wrap;
+          word-wrap: break-word;
+          overflow-wrap: anywhere;
+        }
+      `}</style>
 
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
@@ -606,39 +625,49 @@ export default function TaskifyApp() {
       {/* Sidebar */}
       <div
         className={`
-        fixed lg:static inset-y-0 left-0 z-50 w-80 bg-[var(--taskify-sidebar)] border-r border-[var(--taskify-border)]
+        fixed lg:static inset-y-0 left-0 z-50 w-72 sm:w-80 bg-[var(--taskify-sidebar)] border-r border-[var(--taskify-border)]
         transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 transition-transform duration-300 ease-in-out
         flex flex-col
       `}
       >
         {/* Logo Section */}
-        <div className="p-6 border-b border-[var(--taskify-border)]">
-          <div className="flex items-center gap-3">
-            <img src="/taskify-logo.png" alt="Taskify" className="w-10 h-10" />
-            <div>
-              <h1 className="text-xl font-bold text-[var(--taskify-text-primary)] font-display">Taskify</h1>
-              <p className="text-sm text-[var(--taskify-text-secondary)]">From Plan To Done</p>
+        <div className="p-4 sm:p-6 border-b border-[var(--taskify-border)]">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <img src="/taskify-logo.png" alt="Taskify" className="w-8 h-8 sm:w-10 sm:h-10" />
+              <div>
+                <h1 className="text-lg sm:text-xl font-bold text-[var(--taskify-text-primary)] font-display">Taskify</h1>
+                <p className="text-xs sm:text-sm text-[var(--taskify-text-secondary)]">From Plan To Done</p>
+              </div>
             </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="lg:hidden p-1"
+              onClick={() => setSidebarOpen(false)}
+            >
+              <X className="w-4 h-4" />
+            </Button>
           </div>
         </div>
 
         {/* Profile Section */}
-        <div className="p-6 border-b border-[var(--taskify-border)]">
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
+        <div className="p-4 sm:p-6 border-b border-[var(--taskify-border)]">
+          <div className="space-y-3 sm:space-y-4">
+            <div className="flex items-center gap-2 sm:gap-3">
               <div className="relative">
-                <Avatar className="w-12 h-12">
-                  <AvatarFallback className="bg-[var(--taskify-content)] text-white font-semibold">
+                <Avatar className="w-10 h-10 sm:w-12 sm:h-12">
+                  <AvatarFallback className="bg-[var(--taskify-content)] text-white font-semibold text-sm sm:text-base">
                     {currentUserName.charAt(0).toUpperCase() || "U"}
                   </AvatarFallback>
                 </Avatar>
-                <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center border-2 border-[var(--taskify-border)]">
-                  <User className="w-3 h-3 text-[var(--taskify-content)]" />
+                <div className="absolute -bottom-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full flex items-center justify-center border-2 border-[var(--taskify-border)]">
+                  <User className="w-2 h-2 sm:w-3 sm:h-3 text-[var(--taskify-content)]" />
                 </div>
               </div>
-              <div className="flex-1">
-                <h3 className="font-semibold text-[var(--taskify-text-primary)]">{currentUserName || "User"}</h3>
-                <p className="text-sm text-[var(--taskify-text-secondary)]">{currentUserEmail}</p>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-sm sm:text-base text-[var(--taskify-text-primary)] truncate">{currentUserName || "User"}</h3>
+                <p className="text-xs sm:text-sm text-[var(--taskify-text-secondary)] truncate">{currentUserEmail}</p>
               </div>
             </div>
             <Button
@@ -653,8 +682,8 @@ export default function TaskifyApp() {
         </div>
 
           {/* Navigation */}
-          <div className="flex-1 overflow-y-auto taskify-scrollbar p-4">
-            <nav className="space-y-2">
+          <div className="flex-1 overflow-y-auto taskify-scrollbar p-3 sm:p-4">
+            <nav className="space-y-1 sm:space-y-2">
               {sidebarItems.map((item, index) => (
                 <button
                   key={index}
@@ -664,9 +693,13 @@ export default function TaskifyApp() {
                     } else if (item.view) {
                       handleSidebarNavigation(item.view)
                     }
+                    // Close sidebar on mobile after navigation
+                    if (window.innerWidth < 1024) {
+                      setSidebarOpen(false)
+                    }
                   }}
                   className={`
-                    w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors
+                    w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-3 rounded-lg text-left transition-colors
                     ${
                       item.active || currentView === item.view
                         ? "bg-[var(--taskify-content)] text-white"
@@ -674,10 +707,10 @@ export default function TaskifyApp() {
                     }
                   `}
                 >
-                  <item.icon className="w-5 h-5" />
-                  <span className="flex-1 font-medium">{item.label}</span>
+                  <item.icon className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                  <span className="flex-1 font-medium text-sm sm:text-base truncate">{item.label}</span>
                   {item.count && (
-                    <Badge variant="secondary" className="bg-gray-100 text-gray-600 text-xs">
+                    <Badge variant="secondary" className="bg-gray-100 text-gray-600 text-xs flex-shrink-0">
                       {item.count}
                     </Badge>
                   )}
@@ -866,28 +899,32 @@ export default function TaskifyApp() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Bar */}
-        <header className="bg-white border-b border-[var(--taskify-border)] px-6 py-4">
+        <header className="bg-white border-b border-[var(--taskify-border)] px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" className="lg:hidden" onClick={() => setSidebarOpen(true)}>
-                <Menu className="w-5 h-5" />
+            <div className="flex items-center gap-2 sm:gap-4">
+              <Button variant="ghost" size="sm" className="lg:hidden p-1 sm:p-2" onClick={() => setSidebarOpen(true)}>
+                <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
-              <h2 className="text-2xl font-bold text-[var(--taskify-text-primary)] font-display">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-[var(--taskify-text-primary)] font-display truncate">
                 {getCurrentViewTitle()}
               </h2>
             </div>
 
-            <div className="flex items-center gap-4">
-              <div className="relative hidden md:block">
+            <div className="flex items-center gap-2 sm:gap-4">
+              <div className="relative hidden sm:block">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[var(--taskify-text-secondary)]" />
                 <Input
                   ref={setSearchInputRef}
                   placeholder="Search tasks..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 w-64 bg-[var(--taskify-background)] border-[var(--taskify-border)]"
+                  className="pl-10 w-48 lg:w-64 bg-[var(--taskify-background)] border-[var(--taskify-border)]"
                 />
               </div>
+
+              <Button variant="ghost" size="sm" className="sm:hidden p-1" onClick={() => setSearchQuery("")}>
+                <Search className="w-4 h-4" />
+              </Button>
               <Button variant="ghost" size="sm">
                 <Bell className="w-5 h-5" />
               </Button>
@@ -964,46 +1001,46 @@ export default function TaskifyApp() {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto taskify-scrollbar p-6">
-          <div className="max-w-4xl mx-auto space-y-8">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden taskify-scrollbar p-2 sm:p-4 lg:p-6">
+          <div className="max-w-4xl mx-auto space-y-3 sm:space-y-6 lg:space-y-8 min-w-0">
             {currentView === "project" && selectedProject ? (
-              <Card className="bg-white border-[var(--taskify-border)] shadow-sm">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-3">
-                      <selectedProject.icon className="w-6 h-6 text-[var(--taskify-content)]" />
-                      <h3 className="text-lg font-semibold text-[var(--taskify-text-primary)] font-display">
+              <Card className="bg-white border-[var(--taskify-border)] shadow-sm overflow-hidden">
+                <CardContent className="p-3 sm:p-4 lg:p-6">
+                  <div className="flex items-center justify-between mb-3 sm:mb-6">
+                    <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                      <selectedProject.icon className="w-4 h-4 sm:w-6 sm:h-6 text-[var(--taskify-content)] flex-shrink-0" />
+                      <h3 className="text-sm sm:text-lg font-semibold text-[var(--taskify-text-primary)] font-display truncate">
                         {selectedProject.name}
                       </h3>
                     </div>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white"
+                      className="text-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white flex-shrink-0 ml-2 h-8 w-8 p-0 sm:h-auto sm:w-auto sm:px-3 sm:py-2"
                       onClick={() => addTaskToProject(selectedProject.name)}
                     >
-                      <Plus className="w-4 h-4 mr-2" />
-                      Add task
+                      <Plus className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-2" />
+                      <span className="hidden sm:inline">Add task</span>
                     </Button>
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="space-y-2 sm:space-y-4">
                     {filteredTasks.map((task) => (
                       <div
                         key={task.id}
-                        className="flex items-center gap-4 p-4 rounded-lg hover:bg-[var(--taskify-hover)] transition-colors group"
+                        className="flex items-start sm:items-center gap-2 sm:gap-4 p-2 sm:p-4 rounded-lg hover:bg-[var(--taskify-hover)] transition-colors group min-w-0"
                       >
-                        <button onClick={() => toggleTask(task.id)} className="flex-shrink-0">
+                        <button onClick={() => toggleTask(task.id)} className="flex-shrink-0 mt-1 sm:mt-0">
                           {task.completed ? (
-                            <CheckCircle2 className="w-5 h-5 text-green-500" />
+                            <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
                           ) : (
-                            <Circle className="w-5 h-5 text-[var(--taskify-text-secondary)] group-hover:text-[var(--taskify-content)]" />
+                            <Circle className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--taskify-text-secondary)] group-hover:text-[var(--taskify-content)]" />
                           )}
                         </button>
 
-                        <div className="flex-1 min-w-0">
+                        <div className="flex-1 min-w-0 overflow-hidden">
                           {editingTask === task.id ? (
-                            <div className="flex gap-2">
+                            <div className="flex flex-col sm:flex-row gap-2">
                               <Input
                                 value={editTaskTitle}
                                 onChange={(e) => setEditTaskTitle(e.target.value)}
@@ -1011,215 +1048,73 @@ export default function TaskifyApp() {
                                   if (e.key === "Enter") saveEditTask()
                                   if (e.key === "Escape") cancelEditTask()
                                 }}
-                                className="flex-1"
+                                className="flex-1 text-sm sm:text-base break-words"
+                                style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
                                 autoFocus
                               />
-                              <Button
-                                size="sm"
-                                onClick={saveEditTask}
-                                className="bg-green-500 hover:bg-green-600 text-white"
-                              >
-                                Save
-                              </Button>
-                              <Button size="sm" variant="outline" onClick={cancelEditTask}>
-                                Cancel
-                              </Button>
+                              <div className="flex gap-2">
+                                <Button
+                                  size="sm"
+                                  onClick={saveEditTask}
+                                  className="bg-green-500 hover:bg-green-600 text-white text-xs sm:text-sm px-2 sm:px-3"
+                                >
+                                  Save
+                                </Button>
+                                <Button size="sm" variant="outline" onClick={cancelEditTask} className="text-xs sm:text-sm px-2 sm:px-3">
+                                  Cancel
+                                </Button>
+                              </div>
                             </div>
                           ) : (
                             <>
                               <p
-                                className={`font-medium ${
+                                className={`font-medium text-sm sm:text-base break-words word-wrap ${
                                   task.completed
                                     ? "line-through text-[var(--taskify-text-secondary)]"
                                     : "text-[var(--taskify-text-primary)]"
                                 }`}
+                                style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
                               >
                                 {task.title}
                               </p>
-                              {task.time && (
-                                <div className="flex items-center gap-1 mt-1">
-                                  <Clock className="w-3 h-3 text-[var(--taskify-text-secondary)]" />
-                                  <span className="text-sm text-[var(--taskify-text-secondary)]">{task.time}</span>
+                              <div className="flex flex-wrap items-center gap-3 mt-1">
+                                {task.time && (
+                                  <div className="flex items-center gap-1">
+                                    <Clock className="w-3 h-3 text-[var(--taskify-text-secondary)]" />
+                                    <span className="text-xs sm:text-sm text-[var(--taskify-text-secondary)]">{task.time}</span>
+                                  </div>
+                                )}
+                                <div className="flex items-center gap-1">
+                                  <Calendar className="w-3 h-3 text-[var(--taskify-text-secondary)]" />
+                                  <span className="text-xs sm:text-sm text-[var(--taskify-text-secondary)]">{task.date}</span>
                                 </div>
-                              )}
-                              <div className="flex items-center gap-2 mt-1">
-                                <Calendar className="w-3 h-3 text-[var(--taskify-text-secondary)]" />
-                                <span className="text-sm text-[var(--taskify-text-secondary)]">{task.date}</span>
                               </div>
                             </>
                           )}
                         </div>
 
-                        {task.priority && (
-                          <Badge
-                            variant="secondary"
-                            className={`
-                              ${task.priority === "high" ? "bg-red-100 text-red-700 border-red-200" : ""}
-                              ${task.priority === "medium" ? "bg-yellow-100 text-yellow-700 border-yellow-200" : ""}
-                              ${task.priority === "normal" ? "bg-green-100 text-green-700 border-green-200" : ""}
-                            `}
-                          >
-                            {task.priority}
-                          </Badge>
-                        )}
-
-                        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => startEditTask(task)}
-                            className="h-8 w-8 p-0 text-[var(--taskify-text-secondary)] hover:text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]/10"
-                          >
-                            <Edit3 className="w-3 h-3" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => deleteTask(task.id)}
-                            className="h-8 w-8 p-0 text-[var(--taskify-text-secondary)] hover:text-red-500 hover:bg-red-50"
-                          >
-                            <Trash2 className="w-3 h-3" />
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-4 p-4 border-2 border-dashed border-[var(--taskify-border)] rounded-lg">
-                        <Circle className="w-5 h-5 text-[var(--taskify-text-secondary)]" />
-                        <Input
-                          placeholder="Add a new task..."
-                          value={newTask}
-                          onChange={(e) => setNewTask(e.target.value)}
-                          onKeyPress={(e) => {
-                            if (e.key === "Enter") {
-                              addTaskToProject(selectedProject.name)
-                            }
-                          }}
-                          className="border-none bg-transparent focus:ring-0 focus:border-none p-0 font-medium"
-                        />
-                        <select
-                          onChange={(e) => {
-                            if (newTask.trim()) {
-                              addTaskToProject(selectedProject.name, e.target.value as "normal" | "medium" | "high")
-                            }
-                          }}
-                          className="px-2 py-1 border border-[var(--taskify-border)] rounded text-sm bg-white"
-                          defaultValue="normal"
-                        >
-                          <option value="normal">Normal</option>
-                          <option value="medium">Medium</option>
-                          <option value="high">High</option>
-                        </select>
-                        <Button
-                          size="sm"
-                          onClick={() => addTaskToProject(selectedProject.name)}
-                          className="bg-[var(--taskify-content)] hover:bg-[var(--taskify-accent)] text-white"
-                        >
-                          <Plus className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              Object.entries(groupedTasks).map(([category, categoryTasks]) => (
-                <Card key={category} className="bg-white border-[var(--taskify-border)] shadow-sm">
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between mb-6">
-                      <h3 className="text-lg font-semibold text-[var(--taskify-text-primary)] font-display">
-                        {category}
-                      </h3>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white"
-                        onClick={() => addTask(category)}
-                      >
-                        <Plus className="w-4 h-4 mr-2" />
-                        Add task
-                      </Button>
-                    </div>
-
-                    <div className="space-y-4">
-                      {categoryTasks.map((task) => (
-                        <div
-                          key={task.id}
-                          className="flex items-center gap-4 p-4 rounded-lg hover:bg-[var(--taskify-hover)] transition-colors group"
-                        >
-                          <button onClick={() => toggleTask(task.id)} className="flex-shrink-0">
-                            {task.completed ? (
-                              <CheckCircle2 className="w-5 h-5 text-green-500" />
-                            ) : (
-                              <Circle className="w-5 h-5 text-[var(--taskify-text-secondary)] group-hover:text-[var(--taskify-content)]" />
-                            )}
-                          </button>
-
-                          <div className="flex-1 min-w-0">
-                            {editingTask === task.id ? (
-                              <div className="flex gap-2">
-                                <Input
-                                  value={editTaskTitle}
-                                  onChange={(e) => setEditTaskTitle(e.target.value)}
-                                  onKeyPress={(e) => {
-                                    if (e.key === "Enter") saveEditTask()
-                                    if (e.key === "Escape") cancelEditTask()
-                                  }}
-                                  className="flex-1"
-                                  autoFocus
-                                />
-                                <Button
-                                  size="sm"
-                                  onClick={saveEditTask}
-                                  className="bg-green-500 hover:bg-green-600 text-white"
-                                >
-                                  Save
-                                </Button>
-                                <Button size="sm" variant="outline" onClick={cancelEditTask}>
-                                  Cancel
-                                </Button>
-                              </div>
-                            ) : (
-                              <>
-                                <p
-                                  className={`font-medium ${
-                                    task.completed
-                                      ? "line-through text-[var(--taskify-text-secondary)]"
-                                      : "text-[var(--taskify-text-primary)]"
-                                  }`}
-                                >
-                                  {task.title}
-                                </p>
-                                {task.time && (
-                                  <div className="flex items-center gap-1 mt-1">
-                                    <Clock className="w-3 h-3 text-[var(--taskify-text-secondary)]" />
-                                    <span className="text-sm text-[var(--taskify-text-secondary)]">{task.time}</span>
-                                  </div>
-                                )}
-                              </>
-                            )}
-                          </div>
-
+                        <div className="flex flex-col sm:flex-row items-end sm:items-center gap-1 sm:gap-2">
                           {task.priority && (
                             <Badge
                               variant="secondary"
-                              className={`
-                                ${task.priority === "high" ? "bg-red-100 text-red-700 border-red-200" : ""}
-                                ${task.priority === "medium" ? "bg-yellow-100 text-yellow-700 border-yellow-200" : ""}
-                                ${task.priority === "normal" ? "bg-green-100 text-green-700 border-green-200" : ""}
-                              `}
+                              className={`text-xs ${
+                                task.priority === "high" ? "bg-red-100 text-red-700 border-red-200" : ""
+                              } ${
+                                task.priority === "medium" ? "bg-yellow-100 text-yellow-700 border-yellow-200" : ""
+                              } ${
+                                task.priority === "normal" ? "bg-green-100 text-green-700 border-green-200" : ""
+                              }`}
                             >
                               {task.priority}
                             </Badge>
                           )}
 
-                          <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="flex gap-1 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => startEditTask(task)}
-                              className="h-8 w-8 p-0 text-[var(--taskify-text-secondary)] hover:text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]/10"
+                              className="h-6 w-6 sm:h-8 sm:w-8 p-0 text-[var(--taskify-text-secondary)] hover:text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]/10"
                             >
                               <Edit3 className="w-3 h-3" />
                             </Button>
@@ -1227,35 +1122,40 @@ export default function TaskifyApp() {
                               variant="ghost"
                               size="sm"
                               onClick={() => deleteTask(task.id)}
-                              className="h-8 w-8 p-0 text-[var(--taskify-text-secondary)] hover:text-red-500 hover:bg-red-50"
+                              className="h-6 w-6 sm:h-8 sm:w-8 p-0 text-[var(--taskify-text-secondary)] hover:text-red-500 hover:bg-red-50"
                             >
                               <Trash2 className="w-3 h-3" />
                             </Button>
                           </div>
                         </div>
-                      ))}
+                      </div>
+                    ))}
 
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-4 p-4 border-2 border-dashed border-[var(--taskify-border)] rounded-lg">
-                          <Circle className="w-5 h-5 text-[var(--taskify-text-secondary)]" />
+                    <div className="space-y-3">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 p-3 sm:p-4 border-2 border-dashed border-[var(--taskify-border)] rounded-lg">
+                        <Circle className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--taskify-text-secondary)] flex-shrink-0 mt-2 sm:mt-0" />
+                        <div className="flex-1 w-full">
                           <Input
                             placeholder="Add a new task..."
                             value={newTask}
                             onChange={(e) => setNewTask(e.target.value)}
                             onKeyPress={(e) => {
                               if (e.key === "Enter") {
-                                addTask(category)
+                                addTaskToProject(selectedProject.name)
                               }
                             }}
-                            className="border-none bg-transparent focus:ring-0 focus:border-none p-0 font-medium"
+                            className="border-none bg-transparent focus:ring-0 focus:border-none p-0 font-medium text-sm sm:text-base break-words"
+                            style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
                           />
+                        </div>
+                        <div className="flex items-center gap-2 w-full sm:w-auto">
                           <select
                             onChange={(e) => {
                               if (newTask.trim()) {
-                                addTask(category, e.target.value as "normal" | "medium" | "high")
+                                addTaskToProject(selectedProject.name, e.target.value as "normal" | "medium" | "high")
                               }
                             }}
-                            className="px-2 py-1 border border-[var(--taskify-border)] rounded text-sm bg-white"
+                            className="px-2 py-1 border border-[var(--taskify-border)] rounded text-xs sm:text-sm bg-white flex-1 sm:flex-none"
                             defaultValue="normal"
                           >
                             <option value="normal">Normal</option>
@@ -1264,11 +1164,176 @@ export default function TaskifyApp() {
                           </select>
                           <Button
                             size="sm"
-                            onClick={() => addTask(category)}
-                            className="bg-[var(--taskify-content)] hover:bg-[var(--taskify-accent)] text-white"
+                            onClick={() => addTaskToProject(selectedProject.name)}
+                            className="bg-[var(--taskify-content)] hover:bg-[var(--taskify-accent)] text-white h-8 w-8 p-0 sm:h-auto sm:w-auto sm:px-3"
                           >
-                            <Plus className="w-4 h-4" />
+                            <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
                           </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : (
+              Object.entries(groupedTasks).map(([category, categoryTasks]) => (
+                <Card key={category} className="bg-white border-[var(--taskify-border)] shadow-sm overflow-hidden">
+                  <CardContent className="p-3 sm:p-4 lg:p-6">
+                    <div className="flex items-center justify-between mb-3 sm:mb-6">
+                      <h3 className="text-sm sm:text-lg font-semibold text-[var(--taskify-text-primary)] font-display truncate flex-1">
+                        {category}
+                      </h3>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white flex-shrink-0 ml-2 h-8 w-8 p-0 sm:h-auto sm:w-auto sm:px-3 sm:py-2"
+                        onClick={() => addTask(category)}
+                      >
+                        <Plus className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-2" />
+                        <span className="hidden sm:inline">Add task</span>
+                      </Button>
+                    </div>
+
+                    <div className="space-y-2 sm:space-y-4">
+                      {categoryTasks.map((task) => (
+                        <div
+                          key={task.id}
+                          className="flex items-start sm:items-center gap-2 sm:gap-4 p-2 sm:p-4 rounded-lg hover:bg-[var(--taskify-hover)] transition-colors group min-w-0"
+                        >
+                          <button onClick={() => toggleTask(task.id)} className="flex-shrink-0 mt-1 sm:mt-0">
+                            {task.completed ? (
+                              <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
+                            ) : (
+                              <Circle className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--taskify-text-secondary)] group-hover:text-[var(--taskify-content)]" />
+                            )}
+                          </button>
+
+                          <div className="flex-1 min-w-0 overflow-hidden">
+                            {editingTask === task.id ? (
+                              <div className="flex flex-col sm:flex-row gap-2">
+                                <Input
+                                  value={editTaskTitle}
+                                  onChange={(e) => setEditTaskTitle(e.target.value)}
+                                  onKeyPress={(e) => {
+                                    if (e.key === "Enter") saveEditTask()
+                                    if (e.key === "Escape") cancelEditTask()
+                                  }}
+                                  className="flex-1 text-sm sm:text-base break-words"
+                                  style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
+                                  autoFocus
+                                />
+                                <div className="flex gap-2">
+                                  <Button
+                                    size="sm"
+                                    onClick={saveEditTask}
+                                    className="bg-green-500 hover:bg-green-600 text-white text-xs sm:text-sm px-2 sm:px-3"
+                                  >
+                                    Save
+                                  </Button>
+                                  <Button size="sm" variant="outline" onClick={cancelEditTask} className="text-xs sm:text-sm px-2 sm:px-3">
+                                    Cancel
+                                  </Button>
+                                </div>
+                              </div>
+                            ) : (
+                              <>
+                                <p
+                                  className={`font-medium text-sm sm:text-base break-words word-wrap ${
+                                    task.completed
+                                      ? "line-through text-[var(--taskify-text-secondary)]"
+                                      : "text-[var(--taskify-text-primary)]"
+                                  }`}
+                                  style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
+                                >
+                                  {task.title}
+                                </p>
+                                {task.time && (
+                                  <div className="flex items-center gap-1 mt-1">
+                                    <Clock className="w-3 h-3 text-[var(--taskify-text-secondary)]" />
+                                    <span className="text-xs sm:text-sm text-[var(--taskify-text-secondary)]">{task.time}</span>
+                                  </div>
+                                )}
+                              </>
+                            )}
+                          </div>
+
+                          <div className="flex flex-col sm:flex-row items-end sm:items-center gap-1 sm:gap-2">
+                            {task.priority && (
+                              <Badge
+                                variant="secondary"
+                                className={`text-xs ${
+                                  task.priority === "high" ? "bg-red-100 text-red-700 border-red-200" : ""
+                                } ${
+                                  task.priority === "medium" ? "bg-yellow-100 text-yellow-700 border-yellow-200" : ""
+                                } ${
+                                  task.priority === "normal" ? "bg-green-100 text-green-700 border-green-200" : ""
+                                }`}
+                              >
+                                {task.priority}
+                              </Badge>
+                            )}
+
+                            <div className="flex gap-1 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => startEditTask(task)}
+                                className="h-6 w-6 sm:h-8 sm:w-8 p-0 text-[var(--taskify-text-secondary)] hover:text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]/10"
+                              >
+                                <Edit3 className="w-3 h-3" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => deleteTask(task.id)}
+                                className="h-6 w-6 sm:h-8 sm:w-8 p-0 text-[var(--taskify-text-secondary)] hover:text-red-500 hover:bg-red-50"
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+
+                      <div className="space-y-3">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 p-3 sm:p-4 border-2 border-dashed border-[var(--taskify-border)] rounded-lg">
+                          <Circle className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--taskify-text-secondary)] flex-shrink-0 mt-2 sm:mt-0" />
+                          <div className="flex-1 w-full">
+                            <Input
+                              placeholder="Add a new task..."
+                              value={newTask}
+                              onChange={(e) => setNewTask(e.target.value)}
+                              onKeyPress={(e) => {
+                                if (e.key === "Enter") {
+                                  addTask(category)
+                                }
+                              }}
+                              className="border-none bg-transparent focus:ring-0 focus:border-none p-0 font-medium text-sm sm:text-base break-words"
+                              style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
+                            />
+                          </div>
+                          <div className="flex items-center gap-2 w-full sm:w-auto">
+                            <select
+                              onChange={(e) => {
+                                if (newTask.trim()) {
+                                  addTask(category, e.target.value as "normal" | "medium" | "high")
+                                }
+                              }}
+                              className="px-2 py-1 border border-[var(--taskify-border)] rounded text-xs sm:text-sm bg-white flex-1 sm:flex-none"
+                              defaultValue="normal"
+                            >
+                              <option value="normal">Normal</option>
+                              <option value="medium">Medium</option>
+                              <option value="high">High</option>
+                            </select>
+                            <Button
+                              size="sm"
+                              onClick={() => addTask(category)}
+                              className="bg-[var(--taskify-content)] hover:bg-[var(--taskify-accent)] text-white h-8 w-8 p-0 sm:h-auto sm:w-auto sm:px-3"
+                            >
+                              <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
