@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -38,9 +36,9 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  /* Added Taskify custom color variables */
+  /* Taskify custom color variables - Light theme */
   --taskify-background: #dcedf2;
-  --taskify-content: #a1c8fa;
+  --taskify-content: #3399ff;
   --taskify-sidebar: #ffffff;
   --taskify-border: #e2e8f0;
   --taskify-hover: #f8fafc;
@@ -83,13 +81,13 @@
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
 
-  /* Dark mode Taskify colors */
+  /* Taskify custom color variables - Dark theme */
   --taskify-background: #0f172a;
-  --taskify-content: #a1c8fa;
+  --taskify-content: #3399ff;
   --taskify-sidebar: #1e293b;
   --taskify-border: #334155;
   --taskify-hover: #475569;
-  --taskify-accent: #8bb4f0;
+  --taskify-accent: #2980ff;
   --taskify-text-primary: #f1f5f9;
   --taskify-text-secondary: #94a3b8;
 }

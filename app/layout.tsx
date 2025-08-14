@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Poppins } from "next/font/google"
+import { ThemeProvider } from "next-themes"
 import "./globals.css"
 import { AuthProvider } from "@/context/AuthContext"
 import { TaskProvider } from "@/context/TaskContext"
@@ -30,13 +31,21 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable} antialiased`}>
+    <html lang="en" className={`${inter.variable} ${poppins.variable} antialiased`} suppressHydrationWarning>
       <body className="font-sans">
-        <AuthProvider>
-          <TaskProvider>
-            {children}
-          </TaskProvider>
-        </AuthProvider>
+        <ThemeProvider 
+          attribute="class" 
+          defaultTheme="light" 
+          themes={['light', 'dark', 'system']}
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthProvider>
+            <TaskProvider>
+              {children}
+            </TaskProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

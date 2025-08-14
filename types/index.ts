@@ -20,5 +20,4 @@ export interface User {
   email: string
 }
 
-export type Theme = "default" | "light" | "dark"
 export type CurrentView = "today" | "project" | "inbox" | "search"

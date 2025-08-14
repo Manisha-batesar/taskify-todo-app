@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState, ReactNode } from "react"
-import { Task, Project, CurrentView, Theme } from "@/types"
+import { Task, Project, CurrentView } from "@/types"
 import { Briefcase, Calendar } from "lucide-react"
 
 interface TaskContextType {
@@ -33,8 +33,6 @@ interface TaskContextType {
   setFilterPriority: (priority: string) => void
   filterDate: string
   setFilterDate: (date: string) => void
-  currentTheme: Theme
-  setCurrentTheme: (theme: Theme) => void
   
   // New task input
   newTask: string
@@ -73,7 +71,6 @@ export function TaskProvider({ children }: { children: ReactNode }) {
   const [searchQuery, setSearchQuery] = useState("")
   const [filterPriority, setFilterPriority] = useState("all")
   const [filterDate, setFilterDate] = useState("all")
-  const [currentTheme, setCurrentTheme] = useState<Theme>("default")
   const [newTask, setNewTask] = useState("")
 
   const toggleTask = (id: string) => {
@@ -173,8 +170,6 @@ export function TaskProvider({ children }: { children: ReactNode }) {
       setFilterPriority,
       filterDate,
       setFilterDate,
-      currentTheme,
-      setCurrentTheme,
       newTask,
       setNewTask,
     }}>
