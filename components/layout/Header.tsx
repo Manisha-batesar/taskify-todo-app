@@ -44,7 +44,7 @@ export default function Header({ setSidebarOpen }: HeaderProps) {
   }
 
   return (
-    <header className="bg-white dark:bg-gray-900 border-b border-[var(--taskify-border)] px-4 sm:px-6 py-3 sm:py-4">
+    <header className="bg-[var(--background)] border-b border-[var(--taskify-border)] px-4 sm:px-6 py-3 sm:py-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 sm:gap-4">
           <Button variant="ghost" size="sm" className="lg:hidden p-1 sm:p-2" onClick={() => setSidebarOpen(true)}>

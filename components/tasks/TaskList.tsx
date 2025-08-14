@@ -65,7 +65,7 @@ export default function TaskList() {
 
   if (currentView === "project" && selectedProject) {
     return (
-      <Card className="bg-white border-[var(--taskify-border)] shadow-sm overflow-hidden">
+      <Card className="bg-[var(--background)] border-[var(--taskify-border)] shadow-sm overflow-hidden">
         <CardContent className="p-3 sm:p-4 lg:p-6">
           <div className="flex items-center justify-between mb-3 sm:mb-6">
             <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
@@ -100,7 +100,7 @@ export default function TaskList() {
   return (
     <div className="space-y-4">
       {Object.entries(groupedTasks).map(([category, categoryTasks]) => (
-        <Card key={category} className="bg-white border-[var(--taskify-border)] shadow-sm overflow-hidden">
+        <Card key={category} className="bg-[var(--background)] border-[var(--taskify-border)] shadow-sm overflow-hidden">
           <CardContent className="p-3 sm:p-4 lg:p-6">
             <div className="flex items-center justify-between mb-3 sm:mb-6">
               <h3 className="text-sm sm:text-lg font-semibold text-[var(--taskify-text-primary)] font-display truncate flex-1">

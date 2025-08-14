@@ -43,8 +43,8 @@ export function ThemeSwitcher() {
       </Button>
 
       {showSelector && (
-        <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 border border-[var(--taskify-border)] rounded-lg shadow-lg z-50">
-          <div className="p-2">
+        <div className="absolute right-0 top-full mt-2 w-48 bg-[var(--background)] border border-[var(--taskify-border)] rounded-lg shadow-lg z-50">
+          <div className="p-2 space-y-1.5">
             <div className="text-sm font-medium text-[var(--taskify-text-primary)] mb-2 px-2">
               Choose Theme
             </div>

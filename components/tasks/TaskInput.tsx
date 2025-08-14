@@ -40,7 +40,7 @@ export default function TaskInput({ category }: TaskInputProps) {
               handleSubmit(e.target.value as "normal" | "medium" | "high")
             }
           }}
-          className="px-2 py-1 border border-[var(--taskify-border)] rounded text-xs sm:text-sm bg-white flex-1 sm:flex-none"
+          className="px-2 py-1 border border-[var(--taskify-border)] rounded text-xs sm:text-sm bg-[var(--background)] flex-1 sm:flex-none"
           defaultValue="normal"
         >
           <option value="normal">Normal</option>
