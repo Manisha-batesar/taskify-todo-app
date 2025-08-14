@@ -2,6 +2,8 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Poppins } from "next/font/google"
 import "./globals.css"
+import { AuthProvider } from "@/context/AuthContext"
+import { TaskProvider } from "@/context/TaskContext"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,7 +31,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable} antialiased`}>
-      <body className="font-sans">{children}</body>
+      <body className="font-sans">
+        <AuthProvider>
+          <TaskProvider>
+            {children}
+          </TaskProvider>
+        </AuthProvider>
+      </body>
     </html>
   )
 }

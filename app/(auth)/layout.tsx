@@ -1,11 +1,11 @@
 "use client"
 
+import { ReactNode } from "react"
 import { useAuth } from "@/context/AuthContext"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import WelcomeScreen from "@/components/auth/WelcomeScreen"
 
-export default function HomePage() {
+export default function AuthLayout({ children }: { children: ReactNode }) {
   const { isAuthenticated } = useAuth()
   const router = useRouter()
 
@@ -16,8 +16,8 @@ export default function HomePage() {
   }, [isAuthenticated, router])
 
   if (isAuthenticated) {
-    return null // Will redirect to dashboard
+    return null
   }
 
-  return <WelcomeScreen />
+  return <>{children}</>
 }
