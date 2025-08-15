@@ -75,7 +75,7 @@ export default function ProjectList({ onProjectSelect, selectedProject, currentV
           variant="ghost"
           size="sm"
           onClick={() => setShowAddProject(!showAddProject)}
-          className="h-6 w-6 p-0 text-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white"
+          className="h-6 w-6 p-0 text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]"
           disabled={isLoading}
         >
           <FolderPlus className="w-4 h-4" />
