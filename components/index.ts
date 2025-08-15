@@ -13,3 +13,9 @@ export { default as DashboardLayout } from './layout/DashboardLayout'
 export { default as TaskCard } from './tasks/TaskCard'
 export { default as TaskInput } from './tasks/TaskInput'
 export { default as TaskList } from './tasks/TaskList'
+
+// Project Components
+export { default as ProjectDialog } from './projects/ProjectDialog'
+export { default as ProjectList } from './projects/ProjectList'
+export { default as ProjectItem } from './projects/ProjectItem'
+export { default as AddProjectDialog } from './projects/AddProjectForm' // Legacy export

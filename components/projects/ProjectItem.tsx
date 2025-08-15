@@ -2,9 +2,9 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Check, X, Edit, Trash2 } from "lucide-react"
+import { Edit, Trash2 } from "lucide-react"
+import ProjectDialog from "./ProjectDialog"
 import type { Project } from "@/types"
 
 interface ProjectItemProps {
@@ -12,13 +12,8 @@ interface ProjectItemProps {
   isSelected: boolean
   taskCount: number
   onSelect: (project: Project) => void
-  onEdit: (projectId: string, newName: string) => Promise<void>
+  onEdit: (projectId: string, newName: string, description?: string) => Promise<void>
   onDelete: (projectId: string, projectName: string) => Promise<void>
-  isEditing?: boolean
-  onStartEdit: (project: Project) => void
-  onCancelEdit: () => void
-  editingName?: string
-  onEditNameChange: (name: string) => void
   isLoading?: boolean
 }
 
@@ -29,28 +24,12 @@ export default function ProjectItem({
   onSelect,
   onEdit,
   onDelete,
-  isEditing = false,
-  onStartEdit,
-  onCancelEdit,
-  editingName = "",
-  onEditNameChange,
   isLoading = false
 }: ProjectItemProps) {
   const [isDeleting, setIsDeleting] = useState(false)
-  const [isUpdating, setIsUpdating] = useState(false)
 
-  const handleEdit = async () => {
-    if (editingName.trim() && !isUpdating) {
-      setIsUpdating(true)
-      try {
-        await onEdit(project.id, editingName.trim())
-        onCancelEdit()
-      } catch (error) {
-        console.error('Failed to update project:', error)
-      } finally {
-        setIsUpdating(false)
-      }
-    }
+  const handleEdit = async (id: string, name: string, description?: string) => {
+    await onEdit(id, name, description)
   }
 
   const handleDelete = async () => {
@@ -70,51 +49,6 @@ export default function ProjectItem({
         setIsDeleting(false)
       }
     }
-  }
-
-  if (isEditing) {
-    return (
-      <div className="group relative">
-        <div className="flex items-center gap-2 px-4 py-2">
-          <project.icon className="w-4 h-4 text-[var(--taskify-content)]" />
-          <Input
-            value={editingName}
-            onChange={(e) => onEditNameChange(e.target.value)}
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                handleEdit()
-              } else if (e.key === "Escape") {
-                onCancelEdit()
-              }
-            }}
-            className="flex-1 text-sm h-8"
-            autoFocus
-            disabled={isUpdating}
-          />
-          <Button
-            size="sm"
-            onClick={handleEdit}
-            className="h-6 w-6 p-0 bg-green-500 hover:bg-green-600 text-white"
-            disabled={isUpdating || !editingName.trim()}
-          >
-            {isUpdating ? (
-              <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
-            ) : (
-              <Check className="w-3 h-3" />
-            )}
-          </Button>
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={onCancelEdit}
-            className="h-6 w-6 p-0 bg-transparent"
-            disabled={isUpdating}
-          >
-            <X className="w-3 h-3" />
-          </Button>
-        </div>
-      </div>
-    )
   }
 
   return (
@@ -148,18 +82,21 @@ export default function ProjectItem({
         </div>
 
         <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-1 ml-2 flex-shrink-0">
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={(e) => {
-              e.stopPropagation()
-              onStartEdit(project)
-            }}
-            className="h-6 w-6 p-0 text-blue-500 hover:bg-blue-50 hover:text-blue-600"
-            disabled={isLoading}
-          >
-            <Edit className="w-3 h-3" />
-          </Button>
+          <ProjectDialog
+            mode="edit"
+            project={project}
+            onEditProject={handleEdit}
+            isLoading={isLoading}
+            trigger={
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={(e) => e.stopPropagation()}
+                className="h-6 w-6 p-0 text-blue-500 hover:bg-blue-50 hover:text-blue-600"
+                disabled={isLoading}
+              ><Edit /> </Button>
+            }
+          />
           <Button
             size="sm"
             variant="ghost"

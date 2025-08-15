@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useTask } from "@/context/TaskContext"
 import type { Project } from "@/types"
-import AddProjectDialog from "./AddProjectDialog"
+import ProjectDialog from "./ProjectDialog"
 import ProjectItem from "./ProjectItem"
 
 interface ProjectListProps {
@@ -14,8 +14,6 @@ interface ProjectListProps {
 
 export default function ProjectList({ onProjectSelect, selectedProject, currentView }: ProjectListProps) {
   const { customProjects, tasks, addCustomProject, editProject, deleteProject } = useTask()
-  const [editingProject, setEditingProject] = useState<string | null>(null)
-  const [editProjectName, setEditProjectName] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
   const handleAddProject = async (name: string, description?: string) => {
@@ -27,14 +25,12 @@ export default function ProjectList({ onProjectSelect, selectedProject, currentV
     }
   }
 
-  const handleEditProject = async (projectId: string, newName: string) => {
+  const handleEditProject = async (projectId: string, newName: string, description?: string) => {
     setIsLoading(true)
     try {
-      await editProject(projectId, newName)
+      await editProject(projectId, newName, description)
     } finally {
       setIsLoading(false)
-      setEditingProject(null)
-      setEditProjectName("")
     }
   }
 
@@ -47,16 +43,6 @@ export default function ProjectList({ onProjectSelect, selectedProject, currentV
     }
   }
 
-  const startEditProject = (project: Project) => {
-    setEditingProject(project.id)
-    setEditProjectName(project.name)
-  }
-
-  const cancelProjectEdit = () => {
-    setEditingProject(null)
-    setEditProjectName("")
-  }
-
   const getTaskCount = (projectName: string) => {
     return tasks.filter((t) => t.category === projectName && !t.completed).length
   }
@@ -67,7 +53,8 @@ export default function ProjectList({ onProjectSelect, selectedProject, currentV
         <h4 className="text-sm font-semibold text-[var(--taskify-text-primary)] uppercase tracking-wide">
           Projects
         </h4>
-        <AddProjectDialog 
+        <ProjectDialog 
+          mode="create"
           onAddProject={handleAddProject}
           isLoading={isLoading}
         />
@@ -83,11 +70,6 @@ export default function ProjectList({ onProjectSelect, selectedProject, currentV
             onSelect={onProjectSelect}
             onEdit={handleEditProject}
             onDelete={handleDeleteProject}
-            isEditing={editingProject === project.id}
-            onStartEdit={startEditProject}
-            onCancelEdit={cancelProjectEdit}
-            editingName={editProjectName}
-            onEditNameChange={setEditProjectName}
             isLoading={isLoading}
           />
         ))}
