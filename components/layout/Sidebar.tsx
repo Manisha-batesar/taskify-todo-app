@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { useAuth } from "@/context/AuthContext"
 import { useTask } from "@/context/TaskContext"
+import ProjectList from "@/components/projects/ProjectList"
 import { 
   Search, 
   Inbox, 
@@ -14,10 +15,7 @@ import {
   X, 
   User, 
   FolderPlus, 
-  Plus,
-  Check,
-  Edit2,
-  Trash2
+  Plus
 } from "lucide-react"
 import { Project, CurrentView } from "@/types"
 
@@ -30,25 +28,15 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   const { user, signOut } = useAuth()
   const {
     tasks,
-    customProjects,
-    addCustomProject,
-    editProject,
-    deleteProject,
     selectedProject,
     setSelectedProject,
     currentView,
     setCurrentView,
     selectedDate,
     setSelectedDate,
-    searchQuery,
-    setSearchQuery,
   } = useTask()
 
   const [showCalendar, setShowCalendar] = useState(false)
-  const [showAddProject, setShowAddProject] = useState(false)
-  const [newProjectName, setNewProjectName] = useState("")
-  const [editingProject, setEditingProject] = useState<string | null>(null)
-  const [editProjectName, setEditProjectName] = useState("")
   const [showDateProjectCreation, setShowDateProjectCreation] = useState(false)
   const [newDateProjectName, setNewDateProjectName] = useState("")
 
@@ -67,52 +55,11 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
     }
   }
 
-  const handleAddProject = () => {
-    if (newProjectName.trim()) {
-      addCustomProject(newProjectName.trim())
-      setNewProjectName("")
-      setShowAddProject(false)
-    }
-  }
-
-  const startEditProject = (project: Project) => {
-    setEditingProject(project.id)
-    setEditProjectName(project.name)
-  }
-
-  const saveProjectEdit = () => {
-    if (editProjectName.trim() && editingProject) {
-      editProject(editingProject, editProjectName.trim())
-      setEditingProject(null)
-      setEditProjectName("")
-    }
-  }
-
-  const cancelProjectEdit = () => {
-    setEditingProject(null)
-    setEditProjectName("")
-  }
-
-  const handleDeleteProject = (projectId: string, projectName: string) => {
-    if (confirm(`Are you sure you want to delete "${projectName}"? Tasks will be moved to Personal category.`)) {
-      deleteProject(projectId)
-    }
-  }
-
   const addDateProject = () => {
+    // This is a placeholder for now - you may want to implement this functionality
     if (newDateProjectName.trim()) {
-      const projectName = `${newDateProjectName} (${selectedDate})`
-      addCustomProject(projectName)
       setNewDateProjectName("")
       setShowDateProjectCreation(false)
-      const newProject = {
-        id: Date.now().toString(),
-        name: projectName,
-        icon: Calendar,
-        count: 0,
-      }
-      setSelectedProject(newProject)
-      setCurrentView("project")
     }
   }
 
@@ -289,126 +236,11 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
               </div>
             )}
 
-            <div className="pt-6">
-              <div className="flex items-center justify-between px-4 py-2">
-                <h4 className="text-sm font-semibold text-[var(--taskify-text-primary)] uppercase tracking-wide">
-                  Projects
-                </h4>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowAddProject(!showAddProject)}
-                  className="h-6 w-6 p-0 text-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white"
-                >
-                  <FolderPlus className="w-4 h-4" />
-                </Button>
-              </div>
-
-              {showAddProject && (
-                <div className="px-4 py-2">
-                  <div className="flex gap-2">
-                    <Input
-                      placeholder="Project name..."
-                      value={newProjectName}
-                      onChange={(e) => setNewProjectName(e.target.value)}
-                      onKeyPress={(e) => {
-                        if (e.key === "Enter") {
-                          handleAddProject()
-                        }
-                      }}
-                      className="text-sm"
-                    />
-                    <Button
-                      size="sm"
-                      onClick={handleAddProject}
-                      className="bg-[var(--taskify-content)] hover:bg-[var(--taskify-accent)] text-white"
-                    >
-                      <Plus className="w-3 h-3" />
-                    </Button>
-                  </div>
-                </div>
-              )}
-
-              <div className="space-y-1">
-                {customProjects.map((project) => (
-                  <div key={project.id} className="group relative">
-                    {editingProject === project.id ? (
-                      <div className="flex items-center gap-2 px-4 py-2">
-                        <project.icon className="w-4 h-4 text-[var(--taskify-content)]" />
-                        <Input
-                          value={editProjectName}
-                          onChange={(e) => setEditProjectName(e.target.value)}
-                          onKeyPress={(e) => {
-                            if (e.key === "Enter") {
-                              saveProjectEdit()
-                            } else if (e.key === "Escape") {
-                              cancelProjectEdit()
-                            }
-                          }}
-                          className="flex-1 text-sm h-8"
-                          autoFocus
-                        />
-                        <Button
-                          size="sm"
-                          onClick={saveProjectEdit}
-                          className="h-6 w-6 p-0 bg-green-500 hover:bg-green-600 text-white"
-                        >
-                          <Check className="w-3 h-3" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={cancelProjectEdit}
-                          className="h-6 w-6 p-0 bg-transparent"
-                        >
-                          <X className="w-3 h-3" />
-                        </Button>
-                      </div>
-                    ) : (
-                      <button
-                        onClick={() => selectProject(project)}
-                        className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg text-left transition-colors ${
-                          selectedProject?.id === project.id && currentView === "project"
-                            ? "bg-[var(--taskify-content)] text-white"
-                            : "text-[var(--taskify-text-secondary)] hover:bg-[var(--taskify-hover)] hover:text-[var(--taskify-text-primary)]"
-                        }`}
-                      >
-                        <project.icon className="w-4 h-4" />
-                        <span className="flex-1 text-sm font-medium">{project.name}</span>
-                        <Badge variant="secondary" className="bg-gray-100 text-gray-600 text-xs">
-                          {tasks.filter((t) => t.category === project.name && !t.completed).length}
-                        </Badge>
-
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-1 ml-2">
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              startEditProject(project)
-                            }}
-                            className="h-6 w-6 p-0 hover:bg-blue-500 hover:text-white"
-                          >
-                            <Edit2 className="w-3 h-3" />
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              handleDeleteProject(project.id, project.name)
-                            }}
-                            className="h-6 w-6 p-0 hover:bg-red-500 hover:text-white"
-                          >
-                            <Trash2 className="w-3 h-3" />
-                          </Button>
-                        </div>
-                      </button>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+            <ProjectList 
+              onProjectSelect={selectProject}
+              selectedProject={selectedProject}
+              currentView={currentView}
+            />
           </nav>
         </div>
       </div>

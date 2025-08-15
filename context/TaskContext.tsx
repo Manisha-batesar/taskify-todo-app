@@ -1,8 +1,15 @@
 "use client"
 
-import { createContext, useContext, useState, ReactNode } from "react"
+import { createContext, useContext, useState, ReactNode, useEffect } from "react"
 import { Task, Project, CurrentView } from "@/types"
 import { Briefcase, Calendar } from "lucide-react"
+import { useAuth } from "./AuthContext"
+import { 
+  createProject, 
+  getUserProjects, 
+  updateProject as updateProjectInDB, 
+  deleteProjectWithTasks 
+} from "@/lib/projects"
 
 interface TaskContextType {
   // Tasks
@@ -16,9 +23,9 @@ interface TaskContextType {
   // Projects
   customProjects: Project[]
   setCustomProjects: (projects: Project[]) => void
-  addCustomProject: (name: string) => void
-  editProject: (id: string, name: string) => void
-  deleteProject: (id: string) => void
+  addCustomProject: (name: string) => Promise<void>
+  editProject: (id: string, name: string) => Promise<void>
+  deleteProject: (id: string) => Promise<void>
   selectedProject: Project | null
   setSelectedProject: (project: Project | null) => void
   
@@ -63,6 +70,7 @@ const sampleTasks: Task[] = [
 ]
 
 export function TaskProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuth()
   const [tasks, setTasks] = useState<Task[]>(sampleTasks)
   const [customProjects, setCustomProjects] = useState<Project[]>([])
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
@@ -72,6 +80,30 @@ export function TaskProvider({ children }: { children: ReactNode }) {
   const [filterPriority, setFilterPriority] = useState("all")
   const [filterDate, setFilterDate] = useState("all")
   const [newTask, setNewTask] = useState("")
+
+  // Load projects from database when user changes
+  useEffect(() => {
+    if (user) {
+      loadUserProjects()
+    } else {
+      setCustomProjects([])
+    }
+  }, [user])
+
+  const loadUserProjects = async () => {
+    try {
+      const dbProjects = await getUserProjects()
+      const projects: Project[] = dbProjects.map(dbProject => ({
+        id: dbProject.id,
+        name: dbProject.title,
+        icon: Briefcase,
+        count: 0
+      }))
+      setCustomProjects(projects)
+    } catch (error) {
+      console.error('Failed to load projects:', error)
+    }
+  }
 
   const toggleTask = (id: string) => {
     setTasks(tasks.map((task) => (task.id === id ? { ...task, completed: !task.completed } : task)))
@@ -100,48 +132,76 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     setTasks(tasks.map((task) => (task.id === id ? { ...task, title } : task)))
   }
 
-  const addCustomProject = (name: string) => {
-    const newProject: Project = {
-      id: Date.now().toString(),
-      name,
-      icon: Briefcase,
-      count: 0,
-    }
-    setCustomProjects([...customProjects, newProject])
-  }
-
-  const editProject = (id: string, name: string) => {
-    const oldProject = customProjects.find((p) => p.id === id)
-    if (oldProject) {
-      setCustomProjects(
-        customProjects.map((project) =>
-          project.id === id ? { ...project, name } : project
-        )
-      )
-      
-      // Update tasks category
-      setTasks(
-        tasks.map((task) =>
-          task.category === oldProject.name ? { ...task, category: name } : task
-        )
-      )
-    }
-  }
-
-  const deleteProject = (id: string) => {
-    const projectToDelete = customProjects.find((p) => p.id === id)
-    if (projectToDelete) {
-      setCustomProjects(customProjects.filter((p) => p.id !== id))
-      
-      // Move tasks to Personal category
-      setTasks(tasks.map((task) => 
-        task.category === projectToDelete.name ? { ...task, category: "Personal" } : task
-      ))
-
-      if (selectedProject?.id === id) {
-        setSelectedProject(null)
-        setCurrentView("today")
+  const addCustomProject = async (name: string) => {
+    try {
+      const dbProject = await createProject(name)
+      if (dbProject) {
+        const newProject: Project = {
+          id: dbProject.id,
+          name: dbProject.title,
+          icon: Briefcase,
+          count: 0,
+        }
+        setCustomProjects(prev => [...prev, newProject])
       }
+    } catch (error) {
+      console.error('Failed to create project:', error)
+      throw error
+    }
+  }
+
+  const editProject = async (id: string, name: string) => {
+    try {
+      const oldProject = customProjects.find((p) => p.id === id)
+      if (oldProject) {
+        await updateProjectInDB(id, name)
+        
+        setCustomProjects(prev =>
+          prev.map((project) =>
+            project.id === id ? { ...project, name } : project
+          )
+        )
+        
+        // Update tasks category
+        setTasks(prev =>
+          prev.map((task) =>
+            task.category === oldProject.name ? { ...task, category: name } : task
+          )
+        )
+
+        // Update selected project if it's the one being edited
+        if (selectedProject?.id === id) {
+          setSelectedProject(prev => prev ? { ...prev, name } : null)
+        }
+      }
+    } catch (error) {
+      console.error('Failed to update project:', error)
+      throw error
+    }
+  }
+
+  const deleteProject = async (id: string) => {
+    try {
+      const projectToDelete = customProjects.find((p) => p.id === id)
+      if (projectToDelete) {
+        // Delete project and its tasks from database
+        await deleteProjectWithTasks(id)
+        
+        // Remove project from local state
+        setCustomProjects(prev => prev.filter((p) => p.id !== id))
+        
+        // Remove tasks with this project's category from local state
+        setTasks(prev => prev.filter(task => task.category !== projectToDelete.name))
+
+        // Reset selected project if it's the one being deleted
+        if (selectedProject?.id === id) {
+          setSelectedProject(null)
+          setCurrentView("today")
+        }
+      }
+    } catch (error) {
+      console.error('Failed to delete project:', error)
+      throw error
     }
   }
 
