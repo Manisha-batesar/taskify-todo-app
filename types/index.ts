@@ -16,8 +16,17 @@ export interface Project {
 }
 
 export interface User {
-  name: string
-  email: string
+  id: string
+  name?: string
+  email?: string
+  user_metadata?: {
+    name?: string
+    full_name?: string
+    [key: string]: any
+  }
+  app_metadata?: {
+    [key: string]: any
+  }
 }
 
 export type CurrentView = "today" | "project" | "inbox" | "search"

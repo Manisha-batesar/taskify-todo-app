@@ -2,13 +2,17 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react"
 import { User } from "@/types"
+import { supabase } from "@/lib/supabase"
+import type { AuthSession } from '@supabase/supabase-js'
 
 interface AuthContextType {
   isAuthenticated: boolean
   user: User | null
-  signIn: (email: string, password: string, name?: string) => void
-  signUp: (name: string, email: string, password: string) => void
-  signOut: () => void
+  loading: boolean
+  signIn: (email: string, password: string) => Promise<{ error?: string }>
+  signUp: (name: string, email: string, password: string) => Promise<{ error?: string }>
+  signOut: () => Promise<void>
+  session: AuthSession | null
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -16,47 +20,137 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [session, setSession] = useState<AuthSession | null>(null)
 
   useEffect(() => {
-    // Check for stored auth state on mount
-    const stored = localStorage.getItem('taskify-auth')
-    if (stored) {
-      const { isAuthenticated, user } = JSON.parse(stored)
-      setIsAuthenticated(isAuthenticated)
-      setUser(user)
+    // Get initial session
+    const getInitialSession = async () => {
+      const { data: { session }, error } = await supabase.auth.getSession()
+      
+      if (error) {
+        console.error('Error getting session:', error)
+      }
+      
+      if (session) {
+        setSession(session)
+        setIsAuthenticated(true)
+        setUser({
+          id: session.user.id,
+          email: session.user.email,
+          name: session.user.user_metadata?.name || session.user.user_metadata?.full_name || session.user.email?.split('@')[0],
+          user_metadata: session.user.user_metadata,
+          app_metadata: session.user.app_metadata
+        })
+      }
+      
+      setLoading(false)
     }
+
+    getInitialSession()
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log('Auth state changed:', event, session)
+        
+        if (session) {
+          setSession(session)
+          setIsAuthenticated(true)
+          setUser({
+            id: session.user.id,
+            email: session.user.email,
+            name: session.user.user_metadata?.name || session.user.user_metadata?.full_name || session.user.email?.split('@')[0],
+            user_metadata: session.user.user_metadata,
+            app_metadata: session.user.app_metadata
+          })
+        } else {
+          setSession(null)
+          setIsAuthenticated(false)
+          setUser(null)
+        }
+        
+        setLoading(false)
+      }
+    )
+
+    return () => subscription.unsubscribe()
   }, [])
 
-  const signIn = (email: string, password: string, name?: string) => {
-    const userData = {
-      name: name || email.split('@')[0],
-      email
+  const signIn = async (email: string, password: string): Promise<{ error?: string }> => {
+    try {
+      setLoading(true)
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+
+      if (error) {
+        return { error: error.message }
+      }
+
+      return {}
+    } catch (error) {
+      return { error: 'An unexpected error occurred' }
+    } finally {
+      setLoading(false)
     }
-    setIsAuthenticated(true)
-    setUser(userData)
-    localStorage.setItem('taskify-auth', JSON.stringify({ isAuthenticated: true, user: userData }))
   }
 
-  const signUp = (name: string, email: string, password: string) => {
-    const userData = { name, email }
-    setIsAuthenticated(true)
-    setUser(userData)
-    localStorage.setItem('taskify-auth', JSON.stringify({ isAuthenticated: true, user: userData }))
+  const signUp = async (name: string, email: string, password: string): Promise<{ error?: string }> => {
+    try {
+      setLoading(true)
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            name: name,
+            full_name: name,
+          }
+        }
+      })
+
+      if (error) {
+        return { error: error.message }
+      }
+
+      // If user needs to confirm email, show appropriate message
+      if (data.user && !data.session) {
+        return { error: 'Please check your email to confirm your account before signing in.' }
+      }
+
+      return {}
+    } catch (error) {
+      return { error: 'An unexpected error occurred' }
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const signOut = () => {
-    setIsAuthenticated(false)
-    setUser(null)
-    localStorage.removeItem('taskify-auth')
+  const signOut = async (): Promise<void> => {
+    try {
+      setLoading(true)
+      const { error } = await supabase.auth.signOut()
+      if (error) {
+        console.error('Error signing out:', error)
+      }
+    } catch (error) {
+      console.error('Unexpected error during sign out:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
     <AuthContext.Provider value={{
       isAuthenticated,
       user,
+      loading,
       signIn,
       signUp,
-      signOut
+      signOut,
+      session
     }}>
       {children}
     </AuthContext.Provider>

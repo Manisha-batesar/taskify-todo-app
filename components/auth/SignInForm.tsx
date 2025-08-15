@@ -7,20 +7,44 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useAuth } from "@/context/AuthContext"
 import Link from "next/link"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Loader2 } from "lucide-react"
 
 export default function SignInForm() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const { signIn } = useAuth()
+  const [error, setError] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { signIn, loading } = useAuth()
   const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (email && password) {
-      signIn(email, password)
-      router.push("/dashboard")
+    
+    if (!email || !password) {
+      setError("Please fill in all fields")
+      return
+    }
+
+    setError("")
+    setIsSubmitting(true)
+
+    try {
+      const result = await signIn(email, password)
+      
+      if (result.error) {
+        setError(result.error)
+      } else {
+        router.push("/dashboard")
+      }
+    } catch (err) {
+      setError("An unexpected error occurred")
+    } finally {
+      setIsSubmitting(false)
     }
   }
+
+  const isLoading = loading || isSubmitting
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--taskify-background)] p-4">
@@ -36,6 +60,11 @@ export default function SignInForm() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
             <div>
               <Input
                 type="email"
@@ -44,6 +73,7 @@ export default function SignInForm() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="h-12"
+                disabled={isLoading}
               />
             </div>
             <div>
@@ -54,13 +84,22 @@ export default function SignInForm() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className="h-12"
+                disabled={isLoading}
               />
             </div>
             <Button 
               type="submit" 
               className="w-full bg-[var(--taskify-content)] hover:bg-[var(--taskify-accent)] h-12"
+              disabled={isLoading}
             >
-              Sign In
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Signing In...
+                </>
+              ) : (
+                "Sign In"
+              )}
             </Button>
             <p className="text-center text-sm text-[var(--taskify-text-secondary)]">
               Don't have an account?{" "}

@@ -7,21 +7,56 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useAuth } from "@/context/AuthContext"
 import Link from "next/link"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Loader2 } from "lucide-react"
 
 export default function SignUpForm() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const { signUp } = useAuth()
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { signUp, loading } = useAuth()
   const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (name && email && password) {
-      signUp(name, email, password)
-      router.push("/dashboard")
+    
+    if (!name || !email || !password) {
+      setError("Please fill in all fields")
+      return
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long")
+      return
+    }
+
+    setError("")
+    setSuccess("")
+    setIsSubmitting(true)
+
+    try {
+      const result = await signUp(name, email, password)
+      
+      if (result.error) {
+        setError(result.error)
+      } else {
+        setSuccess("Account created successfully! You can now sign in.")
+        // If signup was successful and session was created, redirect
+        setTimeout(() => {
+          router.push("/dashboard")
+        }, 1000)
+      }
+    } catch (err) {
+      setError("An unexpected error occurred")
+    } finally {
+      setIsSubmitting(false)
     }
   }
+
+  const isLoading = loading || isSubmitting
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--taskify-background)] p-4">
@@ -37,6 +72,16 @@ export default function SignUpForm() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+            {success && (
+              <Alert>
+                <AlertDescription>{success}</AlertDescription>
+              </Alert>
+            )}
             <div>
               <Input
                 type="text"
@@ -45,6 +90,7 @@ export default function SignUpForm() {
                 onChange={(e) => setName(e.target.value)}
                 required
                 className="h-12"
+                disabled={isLoading}
               />
             </div>
             <div>
@@ -55,23 +101,34 @@ export default function SignUpForm() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="h-12"
+                disabled={isLoading}
               />
             </div>
             <div>
               <Input
                 type="password"
-                placeholder="Password"
+                placeholder="Password (min. 6 characters)"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className="h-12"
+                disabled={isLoading}
+                minLength={6}
               />
             </div>
             <Button 
               type="submit" 
               className="w-full bg-[var(--taskify-content)] hover:bg-[var(--taskify-accent)] h-12"
+              disabled={isLoading}
             >
-              Sign Up
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating Account...
+                </>
+              ) : (
+                "Sign Up"
+              )}
             </Button>
             <p className="text-center text-sm text-[var(--taskify-text-secondary)]">
               Already have an account?{" "}
