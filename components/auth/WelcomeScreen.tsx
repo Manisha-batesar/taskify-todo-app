@@ -27,14 +27,14 @@ export default function WelcomeScreen() {
           </div>
 
           {/* Auth Buttons */}
-          <div className="space-y-3 sm:space-y-4">
-            <Link href="/signin">
+          <div className="flex items-center justify-center flex-col w-full gap-4">
+            <Link href="/signin" className="w-full">
               <Button className="w-full bg-[var(--taskify-content)] hover:bg-[var(--taskify-accent)] text-white h-11 sm:h-12 text-sm sm:text-lg">
                 <LogIn className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 Sign In
               </Button>
             </Link>
-            <Link href="/signup">
+            <Link href="/signup" className="w-full">
               <Button
                 variant="outline"
                 className="w-full border-[var(--taskify-content)] text-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white h-11 sm:h-12 text-sm sm:text-lg"
