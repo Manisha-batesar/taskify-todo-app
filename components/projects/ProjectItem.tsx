@@ -121,20 +121,33 @@ export default function ProjectItem({
     <div className="group relative">
       <button
         onClick={() => onSelect(project)}
-        className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg text-left transition-colors ${
+        className={`w-full flex items-start gap-3 px-4 py-3 rounded-lg text-left transition-colors ${
           isSelected
             ? "bg-[var(--taskify-content)] text-white"
             : "text-[var(--taskify-text-secondary)] hover:bg-[var(--taskify-hover)] hover:text-[var(--taskify-text-primary)]"
         }`}
         disabled={isLoading}
       >
-        <project.icon className="w-4 h-4 flex-shrink-0" />
-        <span className="flex-1 text-sm font-medium truncate">{project.name}</span>
-        <Badge variant="secondary" className="bg-gray-100 text-gray-600 text-xs flex-shrink-0">
-          {taskCount}
-        </Badge>
+        <project.icon className="w-4 h-4 flex-shrink-0 mt-0.5" />
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium truncate pr-2">{project.name}</span>
+            <Badge variant="secondary" className="bg-gray-100 text-gray-600 text-xs flex-shrink-0">
+              {taskCount}
+            </Badge>
+          </div>
+          {project.description && (
+            <p className={`text-xs mt-1 line-clamp-2 ${
+              isSelected 
+                ? "text-white/80" 
+                : "text-[var(--taskify-text-secondary)]"
+            }`}>
+              {project.description}
+            </p>
+          )}
+        </div>
 
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-1 ml-2">
+        <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-1 ml-2 flex-shrink-0">
           <Button
             size="sm"
             variant="ghost"

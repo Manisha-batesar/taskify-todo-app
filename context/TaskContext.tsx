@@ -23,8 +23,8 @@ interface TaskContextType {
   // Projects
   customProjects: Project[]
   setCustomProjects: (projects: Project[]) => void
-  addCustomProject: (name: string) => Promise<void>
-  editProject: (id: string, name: string) => Promise<void>
+  addCustomProject: (name: string, description?: string) => Promise<void>
+  editProject: (id: string, name: string, description?: string) => Promise<void>
   deleteProject: (id: string) => Promise<void>
   selectedProject: Project | null
   setSelectedProject: (project: Project | null) => void
@@ -96,10 +96,17 @@ export function TaskProvider({ children }: { children: ReactNode }) {
       const projects: Project[] = dbProjects.map(dbProject => ({
         id: dbProject.id,
         name: dbProject.title,
+        description: dbProject.description,
         icon: Briefcase,
         count: 0
       }))
       setCustomProjects(projects)
+      
+      // Auto-select first project on initial load
+      if (projects.length > 0 && !selectedProject) {
+        setSelectedProject(projects[0])
+        setCurrentView("project")
+      }
     } catch (error) {
       console.error('Failed to load projects:', error)
     }
@@ -132,13 +139,14 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     setTasks(tasks.map((task) => (task.id === id ? { ...task, title } : task)))
   }
 
-  const addCustomProject = async (name: string) => {
+  const addCustomProject = async (name: string, description?: string) => {
     try {
-      const dbProject = await createProject(name)
+      const dbProject = await createProject(name, description)
       if (dbProject) {
         const newProject: Project = {
           id: dbProject.id,
           name: dbProject.title,
+          description: dbProject.description,
           icon: Briefcase,
           count: 0,
         }
@@ -150,15 +158,15 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const editProject = async (id: string, name: string) => {
+  const editProject = async (id: string, name: string, description?: string) => {
     try {
       const oldProject = customProjects.find((p) => p.id === id)
       if (oldProject) {
-        await updateProjectInDB(id, name)
+        await updateProjectInDB(id, name, description)
         
         setCustomProjects(prev =>
           prev.map((project) =>
-            project.id === id ? { ...project, name } : project
+            project.id === id ? { ...project, name, description } : project
           )
         )
         
@@ -171,7 +179,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
 
         // Update selected project if it's the one being edited
         if (selectedProject?.id === id) {
-          setSelectedProject(prev => prev ? { ...prev, name } : null)
+          setSelectedProject(prev => prev ? { ...prev, name, description } : null)
         }
       }
     } catch (error) {
