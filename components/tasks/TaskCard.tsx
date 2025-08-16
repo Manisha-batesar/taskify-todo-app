@@ -116,7 +116,7 @@ export default function TaskCard({ task }: TaskCardProps) {
         )}
       </div>
 
-      <div className="flex flex-col sm:flex-row items-end sm:items-center gap-1 sm:gap-2">
+  <div className="flex flex-col sm:flex-row items-end sm:items-center gap-1 sm:gap-2">
         {task.priority && (
           <Badge
             variant="secondary"
@@ -132,12 +132,12 @@ export default function TaskCard({ task }: TaskCardProps) {
           </Badge>
         )}
 
-        <div className="flex gap-1 opacity-100 group-hover:opacity-100 transition-opacity">
+        <div className="flex gap-1">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setIsEditing(true)}
-            className="h-6 w-6 sm:h-8 sm:w-8 p-0 text-[var(--taskify-text-secondary)] hover:text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]/10"
+            className="h-6 w-6 sm:h-8 sm:w-8 p-0 text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]/10 hover:text-[var(--taskify-content)]"
           >
             <Edit3 className="w-3 h-3" />
           </Button>
@@ -145,7 +145,7 @@ export default function TaskCard({ task }: TaskCardProps) {
             variant="ghost"
             size="sm"
             onClick={() => deleteTask(task.id)}
-            className="h-6 w-6 sm:h-8 sm:w-8 p-0 text-[var(--taskify-text-secondary)] hover:text-red-500 hover:bg-red-50"
+            className="h-6 w-6 sm:h-8 sm:w-8 p-0 text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]/10 hover:text-[var(--taskify-content)]"
           >
             <Trash2 className="w-3 h-3" />
           </Button>

@@ -81,7 +81,7 @@ export default function ProjectItem({
           )}
         </div>
 
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-1 ml-2 flex-shrink-0">
+  <div className="flex gap-1 ml-2 flex-shrink-0">
           <ProjectDialog
             mode="edit"
             project={project}
@@ -92,7 +92,7 @@ export default function ProjectItem({
                 size="sm"
                 variant="ghost"
                 onClick={(e) => e.stopPropagation()}
-                className="h-6 w-6 p-0 text-blue-500 hover:bg-blue-50 hover:text-blue-600"
+    className="h-6 w-6 p-0 text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]/10 hover:text-[var(--taskify-content)]"
                 disabled={isLoading}
               ><Edit /> </Button>
             }
@@ -104,11 +104,11 @@ export default function ProjectItem({
               e.stopPropagation()
               handleDelete()
             }}
-            className="h-6 w-6 p-0 text-red-500 hover:bg-red-50 hover:text-red-600"
+      className="h-6 w-6 p-0 text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]/10 hover:text-[var(--taskify-content)]"
             disabled={isLoading || isDeleting}
           >
             {isDeleting ? (
-              <div className="w-3 h-3 border border-red-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-3 h-3 border border-[var(--taskify-content)] border-t-transparent rounded-full animate-spin" />
             ) : (
               <Trash2 className="w-3 h-3" />
             )}
