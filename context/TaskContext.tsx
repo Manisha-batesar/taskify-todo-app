@@ -30,7 +30,7 @@ interface TaskContextType {
   // Projects
   customProjects: Project[]
   setCustomProjects: (projects: Project[]) => void
-  addCustomProject: (name: string, description?: string) => Promise<void>
+  addCustomProject: (name: string, description?: string) => Promise<Project | undefined>
   editProject: (id: string, name: string, description?: string) => Promise<void>
   deleteProject: (id: string) => Promise<void>
   selectedProject: Project | null
@@ -85,7 +85,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
   const [tasks, setTasks] = useState<Task[]>(sampleTasks)
   const [customProjects, setCustomProjects] = useState<Project[]>([])
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-  const [currentView, setCurrentView] = useState<CurrentView>("today")
+  const [currentView, setCurrentView] = useState<CurrentView>("inbox")
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0])
   const [searchQuery, setSearchQuery] = useState("")
   const [filterPriority, setFilterPriority] = useState("all")
@@ -153,11 +153,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
       }))
       setCustomProjects(projects)
       
-      // Auto-select first project on initial load
-      if (projects.length > 0 && !selectedProject) {
-        setSelectedProject(projects[0])
-        setCurrentView("project")
-      }
+      // Don't auto-select project - keep default inbox view
     } catch (error) {
       console.error('Failed to load projects:', error)
     }
@@ -255,6 +251,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
           count: 0,
         }
         setCustomProjects(prev => [...prev, newProject])
+        return newProject
       }
     } catch (error) {
       console.error('Failed to create project:', error)

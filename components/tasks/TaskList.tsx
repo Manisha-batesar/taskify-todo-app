@@ -3,10 +3,12 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useTask } from "@/context/TaskContext"
-import { Plus } from "lucide-react"
+import { Loader2, Plus } from "lucide-react"
 import TaskCard from "./TaskCard"
 import TaskInput from "./TaskInput"
+import AddProjectDialog from "@/components/projects/AddProjectDialog"
 import { Task } from "@/types"
+import { useState } from "react"
 
 export default function TaskList() {
   const {
@@ -18,7 +20,23 @@ export default function TaskList() {
     filterPriority,
     filterDate,
     addTask,
-  } = useTask()
+    addCustomProject,
+    setSelectedProject,
+    setCurrentView,
+  } = useTask();
+  const [isAddingProject, setIsAddingProject] = useState(false);
+
+  const handleAddProject = async (name: string, description?: string) => {
+    setIsAddingProject(true);
+    const newProject = await addCustomProject(name, description)
+    
+    // Select the newly created project
+    if (newProject) {
+      setSelectedProject(newProject)
+      setCurrentView("project")
+    }
+    setIsAddingProject(false);
+  }
 
   const getFilteredTasks = () => {
     let filtered = tasks.filter((task) => {
@@ -104,7 +122,23 @@ export default function TaskList() {
       <div className="flex flex-col items-center justify-center py-12 text-center text-[var(--taskify-text-secondary)]">
         <span className="text-2xl mb-2">🗒️</span>
         <h3 className="text-lg font-semibold mb-1">No tasks found</h3>
-        <p className="text-sm">Add a new task to get started!</p>
+        <p className="text-sm mb-4">Add a new task to get started!</p>
+        {currentView === "inbox" && (
+          <AddProjectDialog
+            mode="create"
+            onAddProject={handleAddProject}
+            trigger={
+              <Button 
+                disabled={isAddingProject}
+                variant="outline" 
+                className="text-[var(--taskify-content)] border-[var(--taskify-content)] hover:bg-[var(--taskify-content)] cursor-pointer"
+              >
+               {isAddingProject ? <Loader2  className="animate-spin"/> : <Plus className="w-4 h-4 mr-2" />}
+                Create New Project
+              </Button>
+            }
+          />
+        )}
       </div>
     )
   }
