@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { LogIn, UserPlus, CheckCircle2, Calendar, Briefcase } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 
 export default function WelcomeScreen() {
@@ -10,13 +11,20 @@ export default function WelcomeScreen() {
       <div className="flex-1 flex items-center justify-center p-4 sm:p-6">
         <div className="max-w-sm sm:max-w-md w-full text-center space-y-6 sm:space-y-8">
           {/* Logo */}
-          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-6 sm:mb-8">
-            <img src="/taskify-logo.png" alt="Taskify" className="w-12 h-12 sm:w-16 sm:h-16" />
+            <div className="flex items-center justify-center gap-2 sm:gap-3 mb-6 sm:mb-8">
+            <Image
+              src="/taskify-logo.png"
+              alt="Taskify"
+              width={64}
+              height={64}
+              className="w-12 h-12 sm:w-16 sm:h-16 rounded-full"
+              priority
+            />
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold text-[var(--taskify-text-primary)] font-display">Taskify</h1>
               <p className="text-sm sm:text-base text-[var(--taskify-text-secondary)]">From Plan To Done</p>
             </div>
-          </div>
+            </div>
 
           {/* Welcome Message */}
           <div className="space-y-3 sm:space-y-4">

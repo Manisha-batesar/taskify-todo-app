@@ -9,6 +9,7 @@ import { useAuth } from "@/context/AuthContext"
 import Link from "next/link"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Loader2 } from "lucide-react"
+import Image from "next/image"
 
 export default function SignInForm() {
   const [email, setEmail] = useState("")
@@ -50,12 +51,12 @@ export default function SignInForm() {
     <div className="min-h-screen flex items-center justify-center bg-[var(--taskify-background)] p-4">
       <Card className="w-full max-w-sm mx-auto">
         <CardHeader className="text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <img src="/taskify-logo.png" alt="Taskify" className="w-8 h-8" />
+            <div className="flex items-center justify-center gap-2 mb-4">
+            <Image src="/taskify-logo.png" alt="Taskify" width={32} height={32} className="w-8 h-8 rounded-full" />
             <div>
               <h1 className="text-lg font-bold text-[var(--taskify-text-primary)]">Taskify</h1>
             </div>
-          </div>
+            </div>
           <CardTitle className="text-xl">Sign In to Taskify</CardTitle>
         </CardHeader>
         <CardContent>

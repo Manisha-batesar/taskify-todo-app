@@ -18,6 +18,7 @@ import {
   Plus
 } from "lucide-react"
 import { Project, CurrentView } from "@/types"
+import Image from "next/image"
 
 interface SidebarProps {
   sidebarOpen: boolean
@@ -104,7 +105,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
         <div className="p-4 sm:p-6 border-b border-[var(--taskify-border)]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 sm:gap-3">
-              <img src="/taskify-logo.png" alt="Taskify" className="w-8 h-8 sm:w-10 sm:h-10" />
+              <Image src="/taskify-logo.png" alt="Taskify" width={32} height={32} className="w-14 h-14 rounded-full" />
               <div>
                 <h1 className="text-lg sm:text-xl font-bold text-[var(--taskify-text-primary)] font-display">Taskify</h1>
                 <p className="text-xs sm:text-sm text-[var(--taskify-text-secondary)]">From Plan To Done</p>
