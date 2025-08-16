@@ -82,7 +82,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
       active: currentView === "today",
       view: "today" as CurrentView,
     },
-    { icon: Calendar, label: "Calendar", count: null, isCalendar: true },
+    // { icon: Calendar, label: "Calendar", count: null, isCalendar: true },
   ]
 
   return (
@@ -162,9 +162,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
               <button
                 key={index}
                 onClick={() => {
-                  if (item.isCalendar) {
-                    setShowCalendar(!showCalendar)
-                  } else if (item.view) {
+                  if(item.view) {
                     handleNavigation(item.view)
                   }
                 }}
@@ -187,7 +185,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
               </button>
             ))}
 
-            {showCalendar && (
+            {/* {showCalendar && (
               <div className="ml-8 p-4 bg-[var(--taskify-hover)] rounded-lg space-y-3">
                 <input
                   type="date"
@@ -234,7 +232,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
                   )}
                 </div>
               </div>
-            )}
+            )} */}
 
             <ProjectList 
               onProjectSelect={selectProject}
