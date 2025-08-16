@@ -22,3 +22,12 @@ export { default as ProjectDialog } from './projects/ProjectDialog'
 export { default as ProjectList } from './projects/ProjectList'
 export { default as ProjectItem } from './projects/ProjectItem'
 export { default as AddProjectDialog } from './projects/AddProjectForm' // Legacy export
+
+// Loading Components
+export { AuthFormSkeleton } from './loading/AuthFormSkeleton'
+export { WelcomeScreenSkeleton } from './loading/WelcomeScreenSkeleton'
+export { TaskListSkeleton } from './loading/TaskListSkeleton'
+export { SidebarSkeleton } from './loading/SidebarSkeleton'
+export { HeaderSkeleton } from './loading/HeaderSkeleton'
+export { DashboardSkeleton } from './loading/DashboardSkeleton'
+export { TodayTasksSkeleton } from './loading/TodayTasksSkeleton'
