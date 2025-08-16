@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -52,6 +53,15 @@ export default function Header({ setSidebarOpen }: HeaderProps) {
           <Button variant="ghost" size="sm" className="lg:hidden p-1 sm:p-2" onClick={() => setSidebarOpen(true)}>
             <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
           </Button>
+          {/* Mobile logo next to menu button */}
+          <Image
+            src="/taskify-logo.png"
+            alt="Taskify logo"
+            width={33}
+            height={33}
+            className="sm:hidden rounded-full"
+            priority
+          />
           <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-[var(--taskify-text-primary)] font-display truncate">
             {getCurrentViewTitle()}
           </h2>
