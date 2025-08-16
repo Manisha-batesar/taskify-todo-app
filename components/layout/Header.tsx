@@ -94,7 +94,7 @@ export default function Header({ setSidebarOpen }: HeaderProps) {
           <Button variant="ghost" size="sm">
             <Bell className="w-5 h-5" />
           </Button>
-
+*/}
           <Button
             variant="ghost"
             size="sm"
@@ -103,7 +103,7 @@ export default function Header({ setSidebarOpen }: HeaderProps) {
           >
             <Filter className="w-5 h-5" />
           </Button>
-          */}
+          
 
           <ThemeSwitcher />
 
