@@ -73,7 +73,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   const filteredTasks = getFilteredTasks()
 
   const sidebarItems = [
-    { icon: Search, label: "Search", count: null, view: "search" as CurrentView },
+  // Search item removed
     { icon: Inbox, label: "Inbox", count: tasks.length, view: "inbox" as CurrentView },
     {
       icon: Calendar,
