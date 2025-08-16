@@ -97,6 +97,18 @@ export default function TaskList() {
     )
   }
 
+  // Show message if no tasks in Inbox or Today views
+  const isInboxOrToday = currentView === "inbox" || (currentView === "today")
+  if (isInboxOrToday && filteredTasks.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12 text-center text-[var(--taskify-text-secondary)]">
+        <span className="text-2xl mb-2">🗒️</span>
+        <h3 className="text-lg font-semibold mb-1">No tasks found</h3>
+        <p className="text-sm">Add a new task to get started!</p>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-4">
       {Object.entries(groupedTasks).map(([category, categoryTasks]) => (
