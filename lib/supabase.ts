@@ -1,14 +1,12 @@
 import { createClient } from '@supabase/supabase-js'
-import { getSupabaseConfig, isSupabaseConfigured } from './env'
 
-// Check if we're in a browser environment
-const isBrowser = typeof window !== 'undefined'
-
-// Create a safe fallback for build time
 const createSupabaseClient = () => {
-  // During build time, if Supabase is not configured, return a mock client
-  if (!isBrowser && !isSupabaseConfigured() && process.env.NODE_ENV === 'production') {
-    console.warn('Supabase not configured during build - using mock client')
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  
+  // During build time or when env vars are missing, return a mock client
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.warn('Supabase environment variables not found - using mock client')
     return {
       auth: {
         getSession: () => Promise.resolve({ data: { session: null }, error: null }),
@@ -26,9 +24,7 @@ const createSupabaseClient = () => {
     } as any
   }
   
-  const config = getSupabaseConfig()
-  
-  return createClient(config.url, config.anonKey, {
+  return createClient(supabaseUrl, supabaseAnonKey, {
     auth: {
       persistSession: true,
       autoRefreshToken: true,

@@ -6,11 +6,19 @@ export const getEnvVar = (name: string, fallback?: string): string => {
   const value = process.env[name]
   
   if (!value && !fallback) {
-    if (typeof window === 'undefined' && process.env.NODE_ENV === 'production') {
-      // During build time in production, log error but don't throw
+    // In browser environment, show a more user-friendly error
+    if (typeof window !== 'undefined') {
       console.error(`Missing required environment variable: ${name}`)
       return ''
     }
+    
+    // During build time in production, log error but don't throw
+    if (typeof window === 'undefined' && process.env.NODE_ENV === 'production') {
+      console.error(`Missing required environment variable: ${name}`)
+      return ''
+    }
+    
+    // In development, throw error for debugging
     throw new Error(`Missing required environment variable: ${name}`)
   }
   
