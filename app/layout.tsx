@@ -22,7 +22,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Taskify - From Plan To Done",
   description: "Professional task management application",
-  generator: "v0.app",
+  generator: "taskify.app",
 }
 
 export default function RootLayout({
