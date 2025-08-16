@@ -1,11 +1,13 @@
 export interface Task {
   id: string
+  project_id?: string
   title: string
   time?: string
   completed: boolean
   priority?: "high" | "medium" | "normal"
   category: string
   date?: string
+  description?: string
 }
 
 export interface Project {

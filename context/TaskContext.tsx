@@ -10,15 +10,22 @@ import {
   updateProject as updateProjectInDB, 
   deleteProjectWithTasks 
 } from "@/lib/projects"
+import {
+  createTask,
+  getAllUserTasks,
+  updateTask as updateTaskInDB,
+  deleteTask as deleteTaskFromDB,
+  toggleTaskCompletion
+} from "@/lib/tasks"
 
 interface TaskContextType {
   // Tasks
   tasks: Task[]
   setTasks: (tasks: Task[]) => void
-  toggleTask: (id: string) => void
-  addTask: (category: string, priority?: "normal" | "medium" | "high") => void
-  deleteTask: (id: string) => void
-  editTask: (id: string, title: string) => void
+  toggleTask: (id: string) => Promise<void>
+  addTask: (category: string, priority?: "normal" | "medium" | "high") => Promise<void>
+  deleteTask: (id: string) => Promise<void>
+  editTask: (id: string, title: string) => Promise<void>
   
   // Projects
   customProjects: Project[]
@@ -81,14 +88,52 @@ export function TaskProvider({ children }: { children: ReactNode }) {
   const [filterDate, setFilterDate] = useState("all")
   const [newTask, setNewTask] = useState("")
 
-  // Load projects from database when user changes
+  // Load projects and tasks from database when user changes
   useEffect(() => {
     if (user) {
       loadUserProjects()
+      loadUserTasks()
     } else {
       setCustomProjects([])
+      setTasks([])
     }
   }, [user])
+
+  const loadUserTasks = async () => {
+    try {
+      const dbTasks = await getAllUserTasks()
+      const tasks: Task[] = dbTasks.map(dbTask => ({
+        id: dbTask.id,
+        project_id: dbTask.project_id,
+        title: dbTask.title,
+        description: dbTask.description,
+        completed: dbTask.completed,
+        category: getProjectNameById(dbTask.project_id) || "Personal",
+        date: dbTask.due_date || new Date().toISOString().split("T")[0],
+        priority: "normal" as const
+      }))
+      setTasks(tasks)
+    } catch (error) {
+      console.error('Failed to load tasks:', error)
+    }
+  }
+
+  // Reload tasks when projects change to update category names
+  useEffect(() => {
+    if (customProjects.length > 0) {
+      loadUserTasks()
+    }
+  }, [customProjects])
+
+  const getProjectNameById = (projectId: string): string | undefined => {
+    const project = customProjects.find(p => p.id === projectId)
+    return project?.name
+  }
+
+  const getProjectIdByName = (projectName: string): string | undefined => {
+    const project = customProjects.find(p => p.name === projectName)
+    return project?.id
+  }
 
   const loadUserProjects = async () => {
     try {
@@ -112,31 +157,79 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const toggleTask = (id: string) => {
-    setTasks(tasks.map((task) => (task.id === id ? { ...task, completed: !task.completed } : task)))
-  }
-
-  const addTask = (category: string, priority: "normal" | "medium" | "high" = "normal") => {
-    if (newTask.trim()) {
-      const task: Task = {
-        id: Date.now().toString(),
-        title: newTask,
-        completed: false,
-        category,
-        priority,
-        date: selectedDate,
+  const toggleTask = async (id: string) => {
+    try {
+      const task = tasks.find(t => t.id === id)
+      if (task && task.project_id) {
+        await toggleTaskCompletion(id, !task.completed)
+        setTasks(tasks.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)))
       }
-      setTasks([...tasks, task])
-      setNewTask("")
+    } catch (error) {
+      console.error('Failed to toggle task:', error)
     }
   }
 
-  const deleteTask = (id: string) => {
-    setTasks(tasks.filter((task) => task.id !== id))
+  const addTask = async (category: string, priority: "normal" | "medium" | "high" = "normal") => {
+    if (newTask.trim()) {
+      try {
+        const projectId = getProjectIdByName(category)
+        if (projectId) {
+          const dbTask = await createTask(projectId, newTask.trim(), undefined, selectedDate)
+          if (dbTask) {
+            const task: Task = {
+              id: dbTask.id,
+              project_id: dbTask.project_id,
+              title: dbTask.title,
+              description: dbTask.description,
+              completed: dbTask.completed,
+              category,
+              priority,
+              date: dbTask.due_date || selectedDate,
+            }
+            setTasks([...tasks, task])
+            setNewTask("")
+          }
+        } else {
+          // Handle case where project doesn't exist (e.g., "Personal" category)
+          const task: Task = {
+            id: Date.now().toString(),
+            title: newTask,
+            completed: false,
+            category,
+            priority,
+            date: selectedDate,
+          }
+          setTasks([...tasks, task])
+          setNewTask("")
+        }
+      } catch (error) {
+        console.error('Failed to add task:', error)
+      }
+    }
   }
 
-  const editTask = (id: string, title: string) => {
-    setTasks(tasks.map((task) => (task.id === id ? { ...task, title } : task)))
+  const deleteTask = async (id: string) => {
+    try {
+      const task = tasks.find(t => t.id === id)
+      if (task && task.project_id) {
+        await deleteTaskFromDB(id)
+      }
+      setTasks(tasks.filter((task) => task.id !== id))
+    } catch (error) {
+      console.error('Failed to delete task:', error)
+    }
+  }
+
+  const editTask = async (id: string, title: string) => {
+    try {
+      const task = tasks.find(t => t.id === id)
+      if (task && task.project_id) {
+        await updateTaskInDB(id, { title })
+      }
+      setTasks(tasks.map((task) => (task.id === id ? { ...task, title } : task)))
+    } catch (error) {
+      console.error('Failed to edit task:', error)
+    }
   }
 
   const addCustomProject = async (name: string, description?: string) => {
