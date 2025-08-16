@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useTask } from "@/context/TaskContext"
@@ -11,9 +12,10 @@ interface TaskInputProps {
 
 export default function TaskInput({ category }: TaskInputProps) {
   const { newTask, setNewTask, addTask } = useTask()
+  const [dueDate, setDueDate] = useState("")
 
   const handleSubmit = (priority: "normal" | "medium" | "high" = "normal") => {
-    addTask(category, priority)
+    addTask(category, priority, dueDate)
   }
 
   return (
@@ -29,8 +31,14 @@ export default function TaskInput({ category }: TaskInputProps) {
               handleSubmit()
             }
           }}
-          className="border-none bg-transparent focus:ring-0 focus:border-none p-0 font-medium text-sm sm:text-base break-words"
+          className="border-none bg-transparent focus:ring-0 focus-border-none p-0 font-medium text-sm sm:text-base break-words"
           style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
+        />
+        <input
+          type="date"
+          value={dueDate}
+          onChange={e => setDueDate(e.target.value)}
+          className="mt-2 px-2 py-1 border border-[var(--taskify-border)] rounded text-xs sm:text-sm bg-[var(--background)] w-full"
         />
       </div>
       <div className="flex items-center gap-2 w-full sm:w-auto">

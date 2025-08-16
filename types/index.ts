@@ -8,6 +8,8 @@ export interface Task {
   category: string
   date?: string
   description?: string
+  createdAt: string // ISO date string
+  dueDate: string // ISO date string
 }
 
 export interface Project {

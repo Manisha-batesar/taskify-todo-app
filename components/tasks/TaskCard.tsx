@@ -23,16 +23,18 @@ export default function TaskCard({ task }: TaskCardProps) {
   const { toggleTask, editTask, deleteTask } = useTask()
   const [isEditing, setIsEditing] = useState(false)
   const [editTitle, setEditTitle] = useState(task.title)
+  const [editDueDate, setEditDueDate] = useState(task.dueDate)
 
   const handleSave = () => {
-    if (editTitle.trim()) {
-      editTask(task.id, editTitle.trim())
+    if (editTitle.trim() && editDueDate) {
+      editTask(task.id, editTitle.trim(), editDueDate)
       setIsEditing(false)
     }
   }
 
   const handleCancel = () => {
     setEditTitle(task.title)
+    setEditDueDate(task.dueDate)
     setIsEditing(false)
   }
 
@@ -59,6 +61,12 @@ export default function TaskCard({ task }: TaskCardProps) {
               className="flex-1 text-sm sm:text-base break-words"
               style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
               autoFocus
+            />
+            <input
+              type="date"
+              value={editDueDate}
+              onChange={e => setEditDueDate(e.target.value)}
+              className="px-2 py-1 border border-[var(--taskify-border)] rounded text-xs sm:text-sm bg-[var(--background)]"
             />
             <div className="flex gap-2">
               <Button

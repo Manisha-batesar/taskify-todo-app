@@ -26,8 +26,8 @@ export default function TaskList() {
       const dateMatch = filterDate === "all" || task.date === filterDate
 
       if (currentView === "today") {
-        const dateFilter = selectedDate === new Date().toISOString().split("T")[0] || task.date === selectedDate
-        return priorityMatch && dateMatch && dateFilter
+        const today = new Date().toISOString().split("T")[0]
+        return priorityMatch && dateMatch && task.dueDate === today
       } else if (currentView === "project" && selectedProject) {
         return priorityMatch && dateMatch && task.category === selectedProject.name
       } else if (currentView === "inbox") {

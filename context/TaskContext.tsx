@@ -23,9 +23,9 @@ interface TaskContextType {
   tasks: Task[]
   setTasks: (tasks: Task[]) => void
   toggleTask: (id: string) => Promise<void>
-  addTask: (category: string, priority?: "normal" | "medium" | "high") => Promise<void>
+  addTask: (category: string, priority?: "normal" | "medium" | "high", dueDate?: string) => Promise<void>
   deleteTask: (id: string) => Promise<void>
-  editTask: (id: string, title: string) => Promise<void>
+  editTask: (id: string, title: string, newDueDate?: string) => Promise<void>
   
   // Projects
   customProjects: Project[]
@@ -64,6 +64,8 @@ const sampleTasks: Task[] = [
     priority: "medium",
     category: "Personal",
     date: new Date().toISOString().split("T")[0],
+    createdAt: new Date().toISOString().split("T")[0],
+    dueDate: new Date().toISOString().split("T")[0],
   },
   {
     id: "2",
@@ -73,6 +75,8 @@ const sampleTasks: Task[] = [
     priority: "high",
     category: "Personal",
     date: new Date().toISOString().split("T")[0],
+    createdAt: new Date().toISOString().split("T")[0],
+    dueDate: new Date().toISOString().split("T")[0],
   },
 ]
 
@@ -110,7 +114,9 @@ export function TaskProvider({ children }: { children: ReactNode }) {
         completed: dbTask.completed,
         category: getProjectNameById(dbTask.project_id) || "Personal",
         date: dbTask.due_date || new Date().toISOString().split("T")[0],
-        priority: "normal" as const
+        priority: "normal" as const,
+        createdAt: dbTask.created_at || new Date().toISOString().split("T")[0],
+        dueDate: dbTask.due_date || new Date().toISOString().split("T")[0],
       }))
       setTasks(tasks)
     } catch (error) {
@@ -126,8 +132,8 @@ export function TaskProvider({ children }: { children: ReactNode }) {
   }, [customProjects])
 
   const getProjectNameById = (projectId: string): string | undefined => {
-    const project = customProjects.find(p => p.id === projectId)
-    return project?.name
+  const project = customProjects.find(p => p.id === projectId)
+  return project?.name
   }
 
   const getProjectIdByName = (projectName: string): string | undefined => {
@@ -169,12 +175,13 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const addTask = async (category: string, priority: "normal" | "medium" | "high" = "normal") => {
+  const addTask = async (category: string, priority: "normal" | "medium" | "high" = "normal", dueDate?: string) => {
     if (newTask.trim()) {
       try {
+        const now = new Date().toISOString().split("T")[0]
         const projectId = getProjectIdByName(category)
         if (projectId) {
-          const dbTask = await createTask(projectId, newTask.trim(), undefined, selectedDate)
+          const dbTask = await createTask(projectId, newTask.trim(), undefined, dueDate || selectedDate)
           if (dbTask) {
             const task: Task = {
               id: dbTask.id,
@@ -185,6 +192,8 @@ export function TaskProvider({ children }: { children: ReactNode }) {
               category,
               priority,
               date: dbTask.due_date || selectedDate,
+              createdAt: dbTask.created_at || now,
+              dueDate: dbTask.due_date || dueDate || selectedDate,
             }
             setTasks([...tasks, task])
             setNewTask("")
@@ -198,6 +207,8 @@ export function TaskProvider({ children }: { children: ReactNode }) {
             category,
             priority,
             date: selectedDate,
+            createdAt: now,
+            dueDate: dueDate || selectedDate,
           }
           setTasks([...tasks, task])
           setNewTask("")
@@ -220,13 +231,13 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const editTask = async (id: string, title: string) => {
+  const editTask = async (id: string, title: string, newDueDate?: string) => {
     try {
       const task = tasks.find(t => t.id === id)
       if (task && task.project_id) {
-        await updateTaskInDB(id, { title })
+        await updateTaskInDB(id, { title, due_date: newDueDate })
       }
-      setTasks(tasks.map((task) => (task.id === id ? { ...task, title } : task)))
+      setTasks(tasks.map((task) => (task.id === id ? { ...task, title, dueDate: newDueDate !== undefined ? newDueDate : task.dueDate } : task)))
     } catch (error) {
       console.error('Failed to edit task:', error)
     }
