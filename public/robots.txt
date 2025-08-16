@@ -1,5 +1,5 @@
 # robots.txt for Taskify - Task Management App
-# https://taskify.app/robots.txt
+# https://taskifyes.vercel.app/robots.txt
 
 User-agent: *
 Allow: /
@@ -14,7 +14,7 @@ Disallow: /_next/
 Disallow: /admin/
 
 # Sitemap location
-Sitemap: https://taskify.app/sitemap.xml
+Sitemap: https://taskifyes.vercel.app/sitemap.xml
 
 # Crawl delay (optional - helps with server load)
 Crawl-delay: 1

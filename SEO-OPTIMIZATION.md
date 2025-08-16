@@ -87,14 +87,14 @@ Add these to your `.env.local` file:
 
 ```bash
 # Site Configuration
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
+NEXT_PUBLIC_SITE_URL=https://taskifyes.vercel.app
 
 # SEO Verification Codes
 NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=your_google_verification_code
 NEXT_PUBLIC_YANDEX_VERIFICATION=your_yandex_verification_code
 
 # Social Media
-NEXT_PUBLIC_TWITTER_HANDLE=@yourtwitterhandle
+NEXT_PUBLIC_TWITTER_HANDLE=@Manishabatesar
 ```
 
 ### Search Console Setup

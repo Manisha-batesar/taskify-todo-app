@@ -19,7 +19,7 @@ export default function SEO({
   noindex = false,
   schemaMarkup
 }: SEOProps) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://taskify.app"
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://taskifyes.vercel.app"
   const fullUrl = url ? `${siteUrl}${url}` : siteUrl
   const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`
 
@@ -42,8 +42,8 @@ export default function SEO({
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@taskifyapp" />
-      <meta name="twitter:creator" content="@taskifyapp" />
+      <meta name="twitter:site" content="@taskifyes" />
+      <meta name="twitter:creator" content="@Manishabatesar" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={fullImageUrl} />

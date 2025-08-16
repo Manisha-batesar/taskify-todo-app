@@ -63,7 +63,7 @@ export async function GET(request: Request) {
               opacity: 0.8,
             }}
           >
-            📋 taskify.app
+            📋 taskifyes.vercel.app
           </div>
         </div>
       ),

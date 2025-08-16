@@ -19,7 +19,7 @@ const poppins = Poppins({
   variable: "--font-poppins",
 })
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://taskify.app"
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://taskifyes.vercel.app"
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -75,8 +75,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@taskifyapp",
-    creator: "@taskifyapp",
+    site: "@taskifyes",
+    creator: "@Manishabatesar",
     title: "Taskify - From Plan To Done | Professional Task Management",
     description: "Transform your productivity with Taskify - the ultimate task management app. Organize projects, track deadlines, and achieve your goals efficiently.",
     images: ["/tsakify-preview.png"],
