@@ -1,5 +1,15 @@
+import type { Metadata } from "next"
 import ProtectedRoute from "@/components/auth/ProtectedRoute"
 import TaskList from "@/components/tasks/TaskList"
+
+export const metadata: Metadata = {
+  title: "Today's Tasks - Focus on What Matters",
+  description: "View and manage your tasks scheduled for today. Stay focused and productive with your daily task overview.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+}
 
 export default function TodayTasksPage() {
   return (

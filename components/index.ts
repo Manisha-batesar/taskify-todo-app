@@ -1,3 +1,6 @@
+// SEO Component
+export { default as SEO } from './SEO'
+
 // Auth Components
 export { default as WelcomeScreen } from './auth/WelcomeScreen'
 export { default as SignInForm } from './auth/SignInForm'
