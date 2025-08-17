@@ -38,6 +38,8 @@ export default function TaskCard({ task }: TaskCardProps) {
     setIsEditing(false)
   }
 
+  const isValidEdit = editTitle.trim().length > 0 && editDueDate.trim().length > 0
+
   return (
     <div className="flex items-start sm:items-center gap-2 sm:gap-4 p-2 sm:p-4 rounded-lg hover:bg-[var(--taskify-hover)] transition-all duration-200 group min-w-0 border border-transparent hover:border-[var(--taskify-border)] hover:shadow-sm">
       <button onClick={() => toggleTask(task.id)} className="flex-shrink-0 mt-1 sm:mt-0 transition-transform hover:scale-110">
@@ -50,41 +52,59 @@ export default function TaskCard({ task }: TaskCardProps) {
 
       <div className="flex-1 min-w-0 overflow-hidden">
         {isEditing ? (
-          <div className="flex flex-col sm:flex-row gap-2">
-            <Input
-              value={editTitle}
-              onChange={(e) => setEditTitle(e.target.value)}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") handleSave()
-                if (e.key === "Escape") handleCancel()
-              }}
-              className="flex-1 text-sm sm:text-base break-words"
-              style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
-              autoFocus
-            />
-            <input
-              type="date"
-              value={editDueDate}
-              onChange={e => setEditDueDate(e.target.value)}
-              className="px-2 py-1 border border-[var(--taskify-border)] rounded text-xs sm:text-sm bg-[var(--background)]"
-            />
-            <div className="flex gap-2">
-              <Button
-                size="sm"
-                onClick={handleSave}
-                className="bg-green-500 hover:bg-green-600 text-white text-xs sm:text-sm px-2 sm:px-3"
-              >
-                Save
-              </Button>
-              <Button 
-                size="sm" 
-                variant="outline" 
-                onClick={handleCancel} 
-                className="text-xs sm:text-sm px-2 sm:px-3"
-              >
-                Cancel
-              </Button>
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Input
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter" && isValidEdit) handleSave()
+                  if (e.key === "Escape") handleCancel()
+                }}
+                className={`flex-1 text-sm sm:text-base break-words ${
+                  editTitle.trim().length === 0 ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
+                }`}
+                style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
+                autoFocus
+                placeholder="Task title cannot be empty"
+              />
+              <input
+                type="date"
+                value={editDueDate}
+                onChange={e => setEditDueDate(e.target.value)}
+                className={`px-2 py-1 border rounded text-xs sm:text-sm bg-[var(--background)] ${
+                  editDueDate.trim().length === 0 ? 'border-red-300 focus:border-red-500' : 'border-[var(--taskify-border)]'
+                }`}
+              />
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  onClick={handleSave}
+                  disabled={!isValidEdit}
+                  className="bg-green-500 hover:bg-green-600 text-white text-xs sm:text-sm px-2 sm:px-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-green-500"
+                >
+                  Save
+                </Button>
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  onClick={handleCancel} 
+                  className="text-xs sm:text-sm px-2 sm:px-3"
+                >
+                  Cancel
+                </Button>
+              </div>
             </div>
+            {!isValidEdit && (
+              <div className="text-xs text-red-500 mt-1">
+                {editTitle.trim().length === 0 && editDueDate.trim().length === 0 
+                  ? "Task title and due date are required" 
+                  : editTitle.trim().length === 0 
+                    ? "Task title is required" 
+                    : "Due date is required"
+                }
+              </div>
+            )}
           </div>
         ) : (
           <>
