@@ -242,7 +242,7 @@ export default function TaskList() {
                   onClick={handleGoToInbox}
                   variant="outline"
                   size="sm"
-                  className="text-[var(--taskify-content)] border-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white transition-all duration-200 self-start sm:self-auto"
+                  className="text-[var(--taskify-content)] border-[var(--taskify-content)] hover:bg-[var(--taskify-content)] transition-all duration-200 self-start sm:self-auto"
                 >
                   <ArrowLeft className="w-3 h-3 mr-2" />
                   Clear Filter
@@ -293,7 +293,7 @@ export default function TaskList() {
                             onClick={handleGoToInbox}
                             variant="outline" 
                             size="sm"
-                            className="text-[var(--taskify-content)] border-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white transition-all duration-200"
+                            className="text-[var(--taskify-content)] border-[var(--taskify-content)] hover:bg-[var(--taskify-content)] transition-all duration-200"
                           >
                             <span className="mr-2">📥</span>
                             Clear Filter
@@ -333,7 +333,7 @@ export default function TaskList() {
               <Button 
                 onClick={handleGoToInbox}
                 variant="outline" 
-                className="text-[var(--taskify-content)] border-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white transition-all duration-200"
+                className="text-[var(--taskify-content)] border-[var(--taskify-content)] hover:bg-[var(--taskify-content)] transition-all duration-200"
               >
                 <span className="mr-2">📥</span>
                 Clear Filter
@@ -399,7 +399,7 @@ export default function TaskList() {
                 onClick={handleGoToInbox}
                 variant="outline"
                 size="sm"
-                className="text-[var(--taskify-content)] border-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white transition-all duration-200 self-start sm:self-auto"
+                className="text-[var(--taskify-content)] border-[var(--taskify-content)] hover:bg-[var(--taskify-content)] transition-all duration-200 self-start sm:self-auto"
               >
                 <ArrowLeft className="w-3 h-3 mr-2" />
                 Clear Filter
@@ -426,7 +426,7 @@ export default function TaskList() {
                   <Button 
                     onClick={handleGoToInbox}
                     variant="outline" 
-                    className="text-[var(--taskify-content)] border-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white transition-all duration-200"
+                    className="text-[var(--taskify-content)] border-[var(--taskify-content)] hover:bg-[var(--taskify-content)] transition-all duration-200"
                   >
                     <span className="mr-2">📥</span>
                     Clear Filter
