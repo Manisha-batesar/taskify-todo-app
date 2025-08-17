@@ -34,11 +34,11 @@ export default function ProjectItem({
 
   const handleDelete = async () => {
     if (isDeleting) return
-    
-    const confirmMessage = taskCount > 0 
+
+    const confirmMessage = taskCount > 0
       ? `Are you sure you want to delete "${project.name}"? This will also delete ${taskCount} associated task(s).`
       : `Are you sure you want to delete "${project.name}"?`
-    
+
     if (confirm(confirmMessage)) {
       setIsDeleting(true)
       try {
@@ -55,11 +55,10 @@ export default function ProjectItem({
     <div className="group relative">
       <button
         onClick={() => onSelect(project)}
-        className={`w-full flex items-start gap-3 px-4 py-3 rounded-lg text-left transition-colors ${
-          isSelected
+        className={`w-full flex items-start gap-3 px-4 py-3 rounded-lg text-left transition-colors ${isSelected
             ? "bg-[var(--taskify-content)] text-white"
             : "text-[var(--taskify-text-secondary)] hover:bg-[var(--taskify-hover)] hover:text-[var(--taskify-text-primary)]"
-        }`}
+          }`}
         disabled={isLoading}
       >
         <project.icon className="w-4 h-4 flex-shrink-0 mt-0.5" />
@@ -71,17 +70,16 @@ export default function ProjectItem({
             </Badge>
           </div>
           {project.description && (
-            <p className={`text-xs mt-1 line-clamp-2 ${
-              isSelected 
-                ? "text-white/80" 
+            <p className={`text-xs mt-1 line-clamp-2 ${isSelected
+                ? "text-white/80"
                 : "text-[var(--taskify-text-secondary)]"
-            }`}>
+              }`}>
               {project.description}
             </p>
           )}
         </div>
 
-  <div className="flex gap-1 ml-2 flex-shrink-0">
+        <div className="flex gap-1 ml-2 flex-shrink-0">
           <ProjectDialog
             mode="edit"
             project={project}
@@ -92,7 +90,7 @@ export default function ProjectItem({
                 size="sm"
                 variant="ghost"
                 onClick={(e) => e.stopPropagation()}
-    className="h-6 w-6 p-0 text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]/10 hover:text-[var(--taskify-content)]"
+                className={`h-6 w-6 p-0 text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]/10 hover:text-[var(--taskify-content)] ${isSelected ? 'text-white' : ''}`}
                 disabled={isLoading}
               ><Edit /> </Button>
             }
@@ -104,11 +102,11 @@ export default function ProjectItem({
               e.stopPropagation()
               handleDelete()
             }}
-      className="h-6 w-6 p-0 text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]/10 hover:text-[var(--taskify-content)]"
+            className={`h-6 w-6 p-0 text-red-500 hover:text-red-500`}
             disabled={isLoading || isDeleting}
           >
             {isDeleting ? (
-        <div className="w-3 h-3 border border-[var(--taskify-content)] border-t-transparent rounded-full animate-spin" />
+              <div className="w-3 h-3 border border-[var(--taskify-content)] border-t-transparent rounded-full animate-spin" />
             ) : (
               <Trash2 className="w-3 h-3" />
             )}
