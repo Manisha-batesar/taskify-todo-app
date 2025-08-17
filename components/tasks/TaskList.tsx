@@ -12,6 +12,7 @@ import { Task } from "@/types"
 import { useState } from "react"
 
 export default function TaskList() {
+  // Updated button names from "Go Back" and "Go to Inbox" to "Clear Filter"
   const {
     tasks,
     currentView,
@@ -244,7 +245,7 @@ export default function TaskList() {
                   className="text-[var(--taskify-content)] border-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white transition-all duration-200 self-start sm:self-auto"
                 >
                   <ArrowLeft className="w-3 h-3 mr-2" />
-                  Go Back
+                  Clear Filter
                 </Button>
               </div>
             </CardContent>
@@ -295,7 +296,7 @@ export default function TaskList() {
                             className="text-[var(--taskify-content)] border-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white transition-all duration-200"
                           >
                             <span className="mr-2">📥</span>
-                            Go to Inbox
+                            Clear Filter
                           </Button>
                         </>
                       )
@@ -335,7 +336,7 @@ export default function TaskList() {
                 className="text-[var(--taskify-content)] border-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white transition-all duration-200"
               >
                 <span className="mr-2">📥</span>
-                Go to Inbox
+                Clear Filter
               </Button>
             )}
             
@@ -401,7 +402,7 @@ export default function TaskList() {
                 className="text-[var(--taskify-content)] border-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white transition-all duration-200 self-start sm:self-auto"
               >
                 <ArrowLeft className="w-3 h-3 mr-2" />
-                Go Back
+                Clear Filter
               </Button>
             </div>
           </CardContent>
@@ -428,7 +429,7 @@ export default function TaskList() {
                     className="text-[var(--taskify-content)] border-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white transition-all duration-200"
                   >
                     <span className="mr-2">📥</span>
-                    Go to Inbox
+                    Clear Filter
                   </Button>
                 )}
               </div>

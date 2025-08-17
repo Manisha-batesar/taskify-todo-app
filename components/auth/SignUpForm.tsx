@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useAuth } from "@/context/AuthContext"
+import GoogleSignInButton from "./GoogleSignInButton"
 import Link from "next/link"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Loader2 } from "lucide-react"
@@ -72,7 +73,27 @@ export default function SignUpForm() {
           <CardTitle className="text-xl">Sign Up for Taskify</CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-4">
+            {/* Google Sign In */}
+            <GoogleSignInButton 
+              text="Continue with Google" 
+              disabled={isLoading}
+            />
+            
+            {/* Divider */}
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-[var(--taskify-border)]" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-[var(--background)] px-2 text-[var(--taskify-text-secondary)]">
+                  Or create account with email
+                </span>
+              </div>
+            </div>
+
+            {/* Email/Password Form */}
+            <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <Alert variant="destructive">
                 <AlertDescription>{error}</AlertDescription>
@@ -140,7 +161,8 @@ export default function SignUpForm() {
                 Sign in
               </Link>
             </p>
-          </form>
+            </form>
+          </div>
         </CardContent>
       </Card>
     </div>

@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react"
 import { User } from "@/types"
 import { supabase } from "@/lib/supabase"
-import type { AuthSession } from '@supabase/supabase-js'
+import type { AuthSession, AuthChangeEvent, Session } from '@supabase/supabase-js'
 
 interface AuthContextType {
   isAuthenticated: boolean
@@ -11,6 +11,7 @@ interface AuthContextType {
   loading: boolean
   signIn: (email: string, password: string) => Promise<{ error?: string }>
   signUp: (name: string, email: string, password: string) => Promise<{ error?: string }>
+  signInWithGoogle: () => Promise<{ error?: string }>
   signOut: () => Promise<void>
   session: AuthSession | null
 }
@@ -51,7 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      async (event: AuthChangeEvent, session: Session | null) => {
         console.log('Auth state changed:', event, session)
         
         if (session) {
@@ -128,6 +129,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  const signInWithGoogle = async (): Promise<{ error?: string }> => {
+    try {
+      setLoading(true)
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/dashboard`
+        }
+      })
+
+      if (error) {
+        return { error: error.message }
+      }
+
+      return {}
+    } catch (error) {
+      return { error: 'An unexpected error occurred' }
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const signOut = async (): Promise<void> => {
     try {
       setLoading(true)
@@ -149,6 +172,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       loading,
       signIn,
       signUp,
+      signInWithGoogle,
       signOut,
       session
     }}>
