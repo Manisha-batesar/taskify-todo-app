@@ -6,13 +6,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { ThemeSwitcher } from "@/components/ui/theme-switcher"
+import FilterDropdown from "@/components/ui/filter-dropdown"
 import { useAuth } from "@/context/AuthContext"
 import { useTask } from "@/context/TaskContext"
 import { 
   Menu, 
   Search, 
-  Bell, 
-  Filter
+  Bell
 } from "lucide-react"
 
 interface HeaderProps {
@@ -95,14 +95,10 @@ export default function Header({ setSidebarOpen }: HeaderProps) {
             <Bell className="w-5 h-5" />
           </Button>
 */}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setShowFilters(!showFilters)}
-            className={showFilters ? "bg-[var(--taskify-content)] text-white" : ""}
-          >
-            <Filter className="w-5 h-5" />
-          </Button>
+          <FilterDropdown 
+            showFilters={showFilters} 
+            setShowFilters={setShowFilters} 
+          />
           
 
           <ThemeSwitcher />

@@ -39,12 +39,12 @@ export default function TaskCard({ task }: TaskCardProps) {
   }
 
   return (
-    <div className="flex items-start sm:items-center gap-2 sm:gap-4 p-2 sm:p-4 rounded-lg hover:bg-[var(--taskify-hover)] transition-colors group min-w-0">
-      <button onClick={() => toggleTask(task.id)} className="flex-shrink-0 mt-1 sm:mt-0">
+    <div className="flex items-start sm:items-center gap-2 sm:gap-4 p-2 sm:p-4 rounded-lg hover:bg-[var(--taskify-hover)] transition-all duration-200 group min-w-0 border border-transparent hover:border-[var(--taskify-border)] hover:shadow-sm">
+      <button onClick={() => toggleTask(task.id)} className="flex-shrink-0 mt-1 sm:mt-0 transition-transform hover:scale-110">
         {task.completed ? (
           <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
         ) : (
-          <Circle className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--taskify-text-secondary)] group-hover:text-[var(--taskify-content)]" />
+          <Circle className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--taskify-text-secondary)] group-hover:text-[var(--taskify-content)] transition-colors" />
         )}
       </button>
 
@@ -120,24 +120,24 @@ export default function TaskCard({ task }: TaskCardProps) {
         {task.priority && (
           <Badge
             variant="secondary"
-            className={`text-xs ${
-              task.priority === "high" ? "bg-red-100 text-red-700 border-red-200" : ""
+            className={`text-xs font-medium border transition-all duration-200 ${
+              task.priority === "high" ? "bg-red-50 text-red-700 border-red-200 hover:bg-red-100" : ""
             } ${
-              task.priority === "medium" ? "bg-yellow-100 text-yellow-700 border-yellow-200" : ""
+              task.priority === "medium" ? "bg-yellow-50 text-yellow-700 border-yellow-200 hover:bg-yellow-100" : ""
             } ${
-              task.priority === "normal" ? "bg-green-100 text-green-700 border-green-200" : ""
+              task.priority === "normal" ? "bg-green-50 text-green-700 border-green-200 hover:bg-green-100" : ""
             }`}
           >
             {task.priority}
           </Badge>
         )}
 
-        <div className="flex gap-1">
+        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-all duration-200">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setIsEditing(true)}
-            className="h-6 w-6 sm:h-8 sm:w-8 p-0 text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]/10 hover:text-[var(--taskify-content)]"
+            className="h-6 w-6 sm:h-8 sm:w-8 p-0 text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]/10 hover:text-[var(--taskify-content)] transition-all duration-200 hover:scale-110"
           >
             <Edit3 className="w-3 h-3" />
           </Button>
@@ -145,7 +145,7 @@ export default function TaskCard({ task }: TaskCardProps) {
             variant="ghost"
             size="sm"
             onClick={() => deleteTask(task.id)}
-            className="h-6 w-6 sm:h-8 sm:w-8 p-0 text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]/10 hover:text-[var(--taskify-content)]"
+            className="h-6 w-6 sm:h-8 sm:w-8 p-0 text-red-500 hover:bg-red-50 hover:text-red-600 transition-all duration-200 hover:scale-110"
           >
             <Trash2 className="w-3 h-3" />
           </Button>
