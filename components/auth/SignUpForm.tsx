@@ -93,7 +93,7 @@ export default function SignUpForm() {
             </div>
 
             {/* Email/Password Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
               <Alert variant="destructive">
                 <AlertDescription>{error}</AlertDescription>
@@ -111,7 +111,7 @@ export default function SignUpForm() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="h-12"
+                className="h-12 px-4"
                 disabled={isLoading}
               />
             </div>
@@ -122,7 +122,7 @@ export default function SignUpForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="h-12"
+                className="h-12 px-4"
                 disabled={isLoading}
               />
             </div>
@@ -133,7 +133,7 @@ export default function SignUpForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="h-12"
+                className="h-12 px-4"
                 disabled={isLoading}
                 minLength={6}
               />

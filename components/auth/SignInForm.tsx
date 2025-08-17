@@ -81,7 +81,7 @@ export default function SignInForm() {
             </div>
 
             {/* Email/Password Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
               {error && (
                 <Alert variant="destructive">
                   <AlertDescription>{error}</AlertDescription>
@@ -94,7 +94,7 @@ export default function SignInForm() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="h-12"
+                  className="h-12 px-4"
                   disabled={isLoading}
                 />
               </div>
@@ -105,7 +105,7 @@ export default function SignInForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="h-12"
+                  className="h-12 px-4"
                   disabled={isLoading}
                 />
               </div>

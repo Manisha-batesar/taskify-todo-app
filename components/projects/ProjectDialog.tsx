@@ -117,8 +117,8 @@ export default function ProjectDialog({
             )}
           </DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-3">
             <Label htmlFor="project-name">Project Name *</Label>
             <Input
               id="project-name"
@@ -127,9 +127,10 @@ export default function ProjectDialog({
               onChange={(e) => setProjectName(e.target.value)}
               disabled={isLoading}
               autoFocus
+              className="h-12 px-4"
             />
           </div>
-          <div className="space-y-2">
+          <div className="space-y-3">
             <Label htmlFor="project-description">Description</Label>
             <Textarea
               id="project-description"
@@ -138,10 +139,10 @@ export default function ProjectDialog({
               onChange={(e) => setProjectDescription(e.target.value)}
               disabled={isLoading}
               rows={3}
-              className="resize-none"
+              className="resize-none px-4 py-3"
             />
           </div>
-          <div className="flex justify-end gap-2 pt-4">
+          <div className="flex justify-end gap-3 pt-4">
             <Button
               type="button"
               variant="outline"

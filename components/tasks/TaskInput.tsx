@@ -113,7 +113,7 @@ export default function TaskInput({ category }: TaskInputProps) {
         : 'border-[var(--taskify-border)] hover:border-[var(--taskify-content)]/30'
     }`}>
       {/* Main Input Row */}
-      <div className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4">
+      <div className="flex items-center gap-3 p-4 sm:p-5">
         <Circle className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 transition-colors ${
           isExpanded ? 'text-[var(--taskify-content)]' : 'text-[var(--taskify-text-secondary)]'
         }`} />
@@ -131,7 +131,7 @@ export default function TaskInput({ category }: TaskInputProps) {
               }
             }}
             onFocus={() => setIsExpanded(true)}
-            className="border-none bg-transparent focus:ring-0 focus-visible:ring-0 p-0 font-medium text-sm sm:text-base placeholder:text-[var(--taskify-text-secondary)] shadow-none"
+            className="border-none bg-transparent focus:ring-0 focus-visible:ring-0 px-2 py-2 font-medium text-sm sm:text-base placeholder:text-[var(--taskify-text-secondary)] shadow-none h-auto"
             disabled={isSubmitting}
           />
         </div>
@@ -154,8 +154,8 @@ export default function TaskInput({ category }: TaskInputProps) {
 
       {/* Expanded Options */}
       {isExpanded && (
-        <div className="px-3 pb-3 sm:px-4 sm:pb-4 border-t border-[var(--taskify-border)]/50 bg-[var(--background)]/80 backdrop-blur-sm">
-          <div className="flex flex-col gap-3 mt-3">
+        <div className="px-4 pb-4 sm:px-5 sm:pb-5 border-t border-[var(--taskify-border)]/50 bg-[var(--background)]/80 backdrop-blur-sm">
+          <div className="flex flex-col gap-4 mt-4">
             {/* Active Tags Display */}
             {(dueDate || priority !== 'normal') && (
               <div className="flex flex-wrap gap-2">
@@ -201,9 +201,9 @@ export default function TaskInput({ category }: TaskInputProps) {
                     <ChevronDown className="w-3 h-3 ml-1" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-56 p-3" align="start">
-                  <div className="space-y-2">
-                    <div className="text-xs font-medium text-[var(--taskify-text-secondary)] mb-2">Quick options:</div>
+                <PopoverContent className="w-56 p-4" align="start">
+                  <div className="space-y-3">
+                    <div className="text-xs font-medium text-[var(--taskify-text-secondary)] mb-3">Quick options:</div>
                     {[
                       { label: 'Today', value: 'today' },
                       { label: 'Tomorrow', value: 'tomorrow' },
@@ -212,17 +212,17 @@ export default function TaskInput({ category }: TaskInputProps) {
                       <button
                         key={option.value}
                         onClick={() => setDueDate(getQuickDateOption(option.value))}
-                        className="w-full text-left px-2 py-1.5 text-sm rounded hover:bg-[var(--taskify-hover)] transition-colors"
+                        className="w-full text-left px-3 py-2 text-sm rounded hover:bg-[var(--taskify-hover)] transition-colors"
                       >
                         {option.label}
                       </button>
                     ))}
-                    <div className="border-t pt-2 mt-2">
+                    <div className="border-t pt-3 mt-3">
                       <input
                         type="date"
                         value={dueDate}
                         onChange={(e) => setDueDate(e.target.value)}
-                        className="w-full px-2 py-1.5 border border-[var(--taskify-border)] rounded text-sm bg-[var(--background)] focus:border-[var(--taskify-content)] focus:ring-1 focus:ring-[var(--taskify-content)] transition-all duration-200"
+                        className="w-full px-3 py-2 border border-[var(--taskify-border)] rounded text-sm bg-[var(--background)] focus:border-[var(--taskify-content)] focus:ring-1 focus:ring-[var(--taskify-content)] transition-all duration-200"
                       />
                     </div>
                   </div>
@@ -244,8 +244,8 @@ export default function TaskInput({ category }: TaskInputProps) {
                     <ChevronDown className="w-3 h-3 ml-1" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-48 p-2" align="start">
-                  <div className="space-y-1">
+                <PopoverContent className="w-48 p-3" align="start">
+                  <div className="space-y-2">
                     {[
                       { value: 'normal', label: 'Normal', icon: '🟢', color: 'hover:bg-green-50' },
                       { value: 'medium', label: 'Medium', icon: '🟡', color: 'hover:bg-yellow-50' },
@@ -271,7 +271,7 @@ export default function TaskInput({ category }: TaskInputProps) {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center justify-between pt-2">
+            <div className="flex items-center justify-between pt-3">
               <Button
                 variant="ghost"
                 size="sm"
@@ -304,7 +304,7 @@ export default function TaskInput({ category }: TaskInputProps) {
             </div>
 
             {/* Keyboard Hint */}
-            <div className="text-xs text-[var(--taskify-text-secondary)]/70 text-center pt-1">
+            <div className="text-xs text-[var(--taskify-text-secondary)]/70 text-center pt-2">
               Press Ctrl+Enter to add task quickly
             </div>
           </div>
