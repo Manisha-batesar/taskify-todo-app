@@ -87,8 +87,8 @@ export default function ProjectDialog({
       variant="ghost"
       size="sm"
       className={isCreate 
-        ? "h-6 w-6 p-0 text-[var(--taskify-content)] hover:bg-[var(--taskify-content)] hover:text-white"
-        : "h-6 w-6 p-0 text-blue-500 hover:bg-blue-50 hover:text-blue-600"
+        ? "h-6 w-6 p-0 text-[var(--taskify-content)] hover:bg-[var(--taskify-content)]/10 hover:text-[var(--taskify-content)] transition-all duration-200 hover:scale-110 active:scale-100"
+        : "h-6 w-6 p-0 text-blue-500 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200 hover:scale-110 active:scale-100"
       }
       disabled={isLoading}
     >
