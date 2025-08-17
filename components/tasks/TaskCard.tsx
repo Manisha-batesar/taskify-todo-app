@@ -152,7 +152,7 @@ export default function TaskCard({ task }: TaskCardProps) {
           </Badge>
         )}
 
-        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-all duration-200">
+    <div className="flex gap-1 opacity-100 transition-all duration-200">
           <Button
             variant="ghost"
             size="sm"
