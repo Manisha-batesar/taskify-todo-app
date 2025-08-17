@@ -119,15 +119,33 @@ export default function ProjectDialog({
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="project-name">Project Name *</Label>
+            <Label htmlFor="project-name">Project Name * (1-25 characters)</Label>
             <Input
               id="project-name"
               placeholder="Enter project name..."
               value={projectName}
-              onChange={(e) => setProjectName(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value
+                if (value.length <= 25) {
+                  setProjectName(value)
+                }
+              }}
               disabled={isLoading}
               autoFocus
+              maxLength={25}
             />
+            <div className="flex justify-between items-center">
+              <span className={`text-xs ${
+                projectName.trim().length === 0 
+                  ? 'text-red-500' 
+                  : projectName.length >= 20 
+                  ? 'text-yellow-600' 
+                  : 'text-[var(--taskify-text-secondary)]'
+              }`}>
+                {projectName.trim().length === 0 && 'Project name is required'}
+                {projectName.trim().length > 0 && `${projectName.length}/25 characters`}
+              </span>
+            </div>
           </div>
           <div className="space-y-2">
             <Label htmlFor="project-description">Description</Label>
@@ -156,7 +174,7 @@ export default function ProjectDialog({
                 ? "bg-[var(--taskify-content)] hover:bg-[var(--taskify-accent)] text-white"
                 : "bg-blue-500 hover:bg-blue-600 text-white"
               }
-              disabled={isLoading || !projectName.trim()}
+              disabled={isLoading || !projectName.trim() || projectName.trim().length === 0}
             >
               {isLoading ? (
                 <div className="flex items-center gap-2">

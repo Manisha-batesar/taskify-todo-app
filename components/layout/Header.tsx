@@ -47,7 +47,7 @@ export default function Header({ setSidebarOpen }: HeaderProps) {
     if (currentView === "today") {
       return selectedDate === new Date().toISOString().split("T")[0] ? "Today" : selectedDate
     } else if (currentView === "project" && selectedProject) {
-      return selectedProject.name
+      return "Projects"
     } else if (currentView === "inbox") {
       return "Inbox"
     } else if (currentView === "search") {
