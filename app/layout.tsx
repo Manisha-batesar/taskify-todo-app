@@ -195,7 +195,7 @@ export default function RootLayout({
       <body className="font-sans">
         <ThemeProvider 
           attribute="class" 
-          defaultTheme="light" 
+          defaultTheme="system" 
           themes={['light', 'dark', 'system']}
           enableSystem
           disableTransitionOnChange
