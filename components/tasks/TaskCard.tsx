@@ -24,6 +24,8 @@ export default function TaskCard({ task }: TaskCardProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [editTitle, setEditTitle] = useState(task.title)
   const [editDueDate, setEditDueDate] = useState(task.dueDate)
+  // Get today's date in YYYY-MM-DD format
+  const todayISO = new Date().toISOString().slice(0, 10)
 
   const handleSave = () => {
     if (editTitle.trim() && editDueDate) {
@@ -71,6 +73,7 @@ export default function TaskCard({ task }: TaskCardProps) {
               <input
                 type="date"
                 value={editDueDate}
+                min={todayISO}
                 onChange={e => setEditDueDate(e.target.value)}
                 className={`px-2 py-1 border rounded text-xs sm:text-sm bg-[var(--background)] ${
                   editDueDate.trim().length === 0 ? 'border-red-300 focus:border-red-500' : 'border-[var(--taskify-border)]'

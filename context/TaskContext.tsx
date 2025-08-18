@@ -233,7 +233,12 @@ export function TaskProvider({ children }: { children: ReactNode }) {
       if (task && task.project_id) {
         await updateTaskInDB(id, { title, due_date: newDueDate })
       }
-      setTasks(tasks.map((task) => (task.id === id ? { ...task, title, dueDate: newDueDate !== undefined ? newDueDate : task.dueDate } : task)))
+      setTasks(tasks.map((task) => (task.id === id ? { 
+        ...task, 
+        title, 
+        dueDate: newDueDate !== undefined ? newDueDate : task.dueDate,
+        date: newDueDate !== undefined ? newDueDate : task.date
+      } : task)))
     } catch (error) {
       console.error('Failed to edit task:', error)
     }
